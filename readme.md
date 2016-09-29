@@ -30,7 +30,7 @@ Di dukung dan system requirement di rancang oleh [Rinda Cahyana](http://rindacah
 
 1) Clone repository ini atau [download](https://github.com/feelinc/sikobe/archive/master.zip).
 
-2) Download Composer : https://getcomposer.org/download/1.2.1/composer.phar, kemudian simpan di dalam folder sikobe.
+2) Download Composer : https://getcomposer.org/composer.phar, kemudian simpan di dalam folder sikobe.
 
 3) Buat sebuah database. Kemudian import file "/SQL/tables.sql" sehingga terbentuk semua tabel yang di butuhkan.
 
