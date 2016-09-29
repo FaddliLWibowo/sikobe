@@ -19,14 +19,14 @@ Di dukung dan system requirement di rancang oleh [Rinda Cahyana](http://rindacah
 
 ## Instalasi
 
-**Requirement**
+##### Requirement
 - versi PHP : silahkan lihat dokumentasi [Laravel 5.3.x](https://laravel.com/docs/5.3/installation#server-requirements).
 - MariaDB / MySQL.
 - 1 buah domain / subdomain : contoh sikobe.wilayah-anda.id
 - 1 buah sub-domain : contoh api.sikobe.wilayah-anda.id
 - Anda harus mengetahui cara instalasi / pemasangan Laravel PHP Framework.
 
-**Langkah Instalasi SIKOBE**
+##### Langkah Instalasi SIKOBE
 
 1) Clone repository ini atau [download](https://github.com/feelinc/sikobe/archive/master.zip).
 
@@ -53,6 +53,12 @@ php composer.phar install
 ```
 
 7) Login : contoh http://sikobe.wilayah-anda.id/login , login menggunakan email yang terdaftar di tabel "users" dengan password semua "123456" (tanpa kutip).
+
+##### Mengganti isi halaman "Kirim Pesan"
+Silahkan modifikasi file "/resources/views/contact.blade.php"
+
+##### Mengganti isi popup "Mengenai SIKOBE"
+Silahkan modifikasi file "/resources/views/layouts/app-front.blade.php"
 
 ## Teknologi
 

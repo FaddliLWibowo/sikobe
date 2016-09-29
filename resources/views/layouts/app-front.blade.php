@@ -70,6 +70,11 @@
                                 <i class="icon-envelope"></i> <span class="hidden-xs">Kirim Pesan</span>
                             </a>
                         </li>
+                        <li class="dropdown">
+                            <a href="#support-modal" data-toggle="modal" class="dropdown-toggle">
+                                <i class="icon-support"></i> <span class="hidden-xs">Mengenai SIKOBE</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- END TOP NAVIGATION MENU -->
@@ -103,6 +108,61 @@
             </div>
         </div>
         <!-- END FOOTER -->
+
+        <!-- BEGIN SUPPORT MODAL -->
+        <div id="support-modal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title">Mengenai SIKOBE</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Sistem Informasi Korban Bencana</h4>
+                        <p class="margin-top-20">
+                            Aplikasi web ini awalnya di bangun untuk membantu para relawan memberikan informasi mengenai situasi dari semua area yang terdampak bencana banjir di Garut, sehingga publik dapat memantau perkembangannya dan dapat menyalurkan bantuan ke area yang membutuhkan.
+                        </p>
+                        <p class="margin-top-20">
+                            Aplikasi ini di bangun pertama kali oleh para <a href="http://komtik-garut.blogspot.co.id/" target="_blank">Relawan TIK</a> - <a href="https://www.facebook.com/groups/petik.komtik.garut" target="_blank">Perhimpunan Pengembang Platform TIK</a> daerah Garut. Karena keterbatasan waktu para relawan yang mempunyai kemampuan web programming, maka awal belum semua fasilitas terimplementasi. Aplikasi ini akan terus di kembangkan dengan bantuan para kontributor yang mendukung aplikasi open source.
+                        </p>
+                        <p class="margin-top-20">Di dukung dan system requirement di rancang oleh <a href="http://rindacahyana.sttgarut.ac.id/" target="_blank">Rinda Cahyana</a>.</p>
+                        </p>
+                        <h3>Pengembang Awal</h3>
+                        <p class="margin-top-20">Semua kontributor awal berasal dari Garut - Jawa Barat.</p>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <ul class="list-unstyled margin-top-10 margin-bottom-10">
+                                    <li>
+                                        <i class="fa fa-check"></i> <a href="https://github.com/feelinc" target="_blank">Sulaeman</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-check"></i> <a href="https://github.com/antoniosai" target="_blank">Antonio Saiful Islam</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-6">
+                                <ul class="list-unstyled margin-top-10 margin-bottom-10">
+                                    <li>
+                                        <i class="fa fa-check"></i> <a href="https://github.com/iqbalhikmat" target="_blank">Ikbal Ikbal Mohamad Hikmat</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-check"></i> <a href="https://github.com/saddamalmahali" target="_blank">Saddam Almahali</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h3><a href="https://github.com/feelinc/sikobe" target="_blank">Ikut Mengembangkan</a></h3>
+                        <p class="margin-top-20">
+                            Terima kasih untuk ikut membantu mengembangkan aplikasi web ini. Semoga menjadi lebih lengkap fasilitas nya untuk mempermudah melakukan bantuan pasca bencana, baik oleh para relawan maupun publik memantau situasi.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn dark btn-outline">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END SUPPORT MODAL -->
 
         <!-- JavaScripts -->
         <!--[if lt IE 9]>
