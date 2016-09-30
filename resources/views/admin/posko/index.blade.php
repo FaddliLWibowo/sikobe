@@ -72,6 +72,11 @@
             </tbody>
         </table>
     </div>
-  </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" align="center">
+          {{ $lists->links() }}
+        </div>
+    </div>
 </div>
 @stop
