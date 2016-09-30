@@ -13,12 +13,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\StorePosko;
+
 use App\Posko as Model;
 use App\Modules\Area\Models\Eloquent\Area;
 use App\Services\Territory as TerritoryService;
 use App\Services\File as FileService;
+
 use App\Support\Asset;
 use Storage;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Posko extends Controller
 {
@@ -37,13 +40,32 @@ class Posko extends Controller
     protected $regencyId = 3205;
 
     /**
+     * Create a length aware custom paginator instance.
+     *
+     * @param  Collection  $items
+     * @param  int  $perPage
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function paginate($items, $perPage = 10)
+    {
+        //Get current page form url e.g. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        //Slice the collection to get the items to display in current page
+        $currentPageItems = $items->slice(($currentPage - 1) * $perPage, $perPage);
+
+        //Create our paginator and pass it to the view
+        return new LengthAwarePaginator($currentPageItems, count($items), $perPage);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $lists = Model::all();
+        $lists = $this->paginate(Model::all())->setPath('posko');
         return view('admin.posko.index',[
           'lists' => $lists
         ]);
