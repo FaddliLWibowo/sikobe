@@ -81,6 +81,8 @@ Semua kontributor awal berasal dari Garut - Jawa Barat.
 ## Ikut Mengembangkan
 Terima kasih untuk ikut membantu mengembangkan aplikasi web ini. Semoga menjadi lebih lengkap fasilitas nya untuk mempermudah melakukan bantuan pasca bencana, baik oleh para relawan maupun publik memantau situasi.
 
+Untuk mempermudah komunikasi antar pengembang SIKOBE, maka silahkan bergabung di [SiKoBe Slack](http://slack.sikobe.com/).
+
 ## Lisensi
 
 Aplikasi ini kami persembahkan sebagai open-source software dengan lisensi [MIT license](http://opensource.org/licenses/MIT).
