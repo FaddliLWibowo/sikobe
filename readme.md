@@ -74,7 +74,7 @@ SIKOBE menggunakan berbagai macam proyek open source:
 ## Pengembang Awal
 Semua kontributor awal berasal dari Garut - Jawa Barat.
 * [Sulaeman](https://github.com/feelinc) 
-* [Ikbal M H](https://github.com/iqbalhikmat)
+* [Ikbal M H](https://github.com/iiqmohamad)
 * [Antonio S I](https://github.com/antoniosai)
 * [Saddam](https://github.com/saddamalmahali)
 
