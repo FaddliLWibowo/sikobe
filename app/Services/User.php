@@ -10,10 +10,7 @@ namespace App\Services;
  */
 
 use App\Services\Validators\User as UserValidator;
-
 use App\Modules\User\Repository;
-use App\Modules\User\Models\User as UserContract;
-
 use RuntimeException;
 
 class User extends Service
@@ -21,7 +18,7 @@ class User extends Service
     /**
      * Update the profile.
      *
-     * @param  Integer $id
+     * @param  int $id
      *
      * @return \Illuminate\Validation\Validator|mixed
      * @throws \RuntimeException
@@ -50,14 +47,14 @@ class User extends Service
         if ($updatePassword) {
             // Populate data
             $data = [
-                'password' => bcrypt($request->get('password'))
+                'password' => bcrypt($request->get('password')),
             ];
         } else {
             // Format user name data
-            $name  = trim($request->get('name'));
+            $name = trim($request->get('name'));
             $names = explode(' ', $name);
             $firstName = $names[0];
-            $lastName  = '';
+            $lastName = '';
             if (count($names) > 1) {
                 $lastName = trim(str_replace($names[0], '', $name));
             }
@@ -68,7 +65,7 @@ class User extends Service
                 'email'      => $request->get('email'),
                 'activated'  => (int) $request->get('activated', 0),
                 'first_name' => $firstName,
-                'last_name'  => $lastName
+                'last_name'  => $lastName,
             ];
 
             // Update meta
@@ -80,7 +77,7 @@ class User extends Service
         // Save
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to update user');
         }
 
@@ -91,13 +88,13 @@ class User extends Service
      * Search list items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
+     * @param  int $page
+     * @param  int $limit
      *
      * @return array
      * @throws \RuntimeException
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $repository = $this->getUserRepository();
         $collection = $repository->search($params, $page, $limit);
@@ -108,7 +105,7 @@ class User extends Service
     /**
      * Return a item.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return \App\Modules\User\Models\User
      * @throws \App\Modules\User\RecordNotFoundException
@@ -116,16 +113,16 @@ class User extends Service
     public function get($id)
     {
         return $this->getUserRepository()->findBy([
-            'id' => $id
+            'id' => $id,
         ]);
     }
 
     /**
      * Delete a item.
      *
-     * @param  integer $id
+     * @param  int $id
      *
-     * @return boolean
+     * @return bool
      * @throws \App\Modules\User\RecordNotFoundException
      * @throws \RuntimeException
      */
@@ -154,10 +151,10 @@ class User extends Service
         $request = $this->getRequest();
 
         // Format user name data
-        $name  = trim($request->get('name'));
+        $name = trim($request->get('name'));
         $names = explode(' ', $name);
         $firstName = $names[0];
-        $lastName  = '';
+        $lastName = '';
         if (count($names) > 1) {
             $lastName = trim(str_replace($names[0], '', $name));
         }
@@ -169,7 +166,7 @@ class User extends Service
             'password'   => bcrypt($request->get('password')),
             'activated'  => (int) $request->get('activated', 0),
             'first_name' => $firstName,
-            'last_name'  => $lastName
+            'last_name'  => $lastName,
         ];
 
         $userRepository = $this->getUserRepository();
@@ -181,7 +178,7 @@ class User extends Service
         $userRepository->updateMeta($user->id, 'phone', $request->get('phone'));
 
         // Update group
-        $groupAdmin   = $userRepository->findGroupBy(['name' => 'Administrators']);
+        $groupAdmin = $userRepository->findGroupBy(['name' => 'Administrators']);
         $groupRelawan = $userRepository->findGroupBy(['name' => 'Relawan']);
 
         if (is_object($groupAdmin) && is_object($groupRelawan)) {
@@ -200,7 +197,7 @@ class User extends Service
     /**
      * Save a item.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return \Illuminate\Validation\Validator|mixed
      * @throws \RuntimeException
@@ -219,10 +216,10 @@ class User extends Service
         $item = $this->get($id);
 
         // Format user name data
-        $name  = trim($request->get('name'));
+        $name = trim($request->get('name'));
         $names = explode(' ', $name);
         $firstName = $names[0];
-        $lastName  = '';
+        $lastName = '';
         if (count($names) > 1) {
             $lastName = trim(str_replace($names[0], '', $name));
         }
@@ -235,17 +232,17 @@ class User extends Service
             'email'      => $request->get('email'),
             'activated'  => (int) $request->get('activated', 0),
             'first_name' => $firstName,
-            'last_name'  => $lastName
+            'last_name'  => $lastName,
         ];
 
-        if ( ! empty($password)) {
+        if (! empty($password)) {
             $data['password'] = bcrypt($password);
         }
 
         // Save
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to update user');
         }
 
@@ -262,7 +259,7 @@ class User extends Service
             $isAdmin = (bool) $request->get('is_admin', 1);
 
             if ($item->isInGroup('Administrators')) {
-                if ( ! $isAdmin) {
+                if (! $isAdmin) {
                     $userRepository->removeFromGroup($item->id, $groupAdmin->id);
                 }
             } else {

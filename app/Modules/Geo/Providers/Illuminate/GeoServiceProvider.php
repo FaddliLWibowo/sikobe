@@ -10,7 +10,6 @@ namespace App\Modules\Geo\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\Geo\Location;
 
 class GeoServiceProvider extends BaseServiceProvider
@@ -25,9 +24,9 @@ class GeoServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Location::class, function($app) {
+        $this->app->singleton(Location::class, function ($app) {
             $driver = trim($app['config']->get('geo.driver'));
-            $props  = $app['config']->get('geo.'.$driver);
+            $props = $app['config']->get('geo.'.$driver);
 
             return new Location($driver, $props);
         });

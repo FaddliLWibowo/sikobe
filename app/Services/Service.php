@@ -24,7 +24,7 @@ class Service
      * Set current user instance.
      *
      * @param  \App\Modules\User\Models\User $user
-     * 
+     *
      * @return void
      */
     public function setUser(User $user)

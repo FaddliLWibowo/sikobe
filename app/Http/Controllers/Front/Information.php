@@ -10,14 +10,13 @@ namespace App\Http\Controllers\Front;
  */
 
 use Illuminate\Http\Request;
-
 use App\Support\Asset;
 use App\Services\Collection as CollectionService;
 
 class Information extends Controller
 {
     /**
-     * Show the informations page
+     * Show the informations page.
      *
      * @param  \Illuminate\Http\Request  $request.
      *
@@ -26,20 +25,20 @@ class Information extends Controller
     public function index(Request $request)
     {
         $identifier = 'information';
-        $limit      = 5;
-        $page       = (int) $request->get('page', 1);
-        $search     = $request->get('search', '');
+        $limit = 5;
+        $page = (int) $request->get('page', 1);
+        $search = $request->get('search', '');
 
         $result = $this->getCollectionService()->search([
-            'identifier' => $identifier, 
-            'search'     => $search
+            'identifier' => $identifier,
+            'search'     => $search,
         ], $page, $limit);
 
         Asset::add(elixir('assets/css/informations.css'), 'header.top.specific.css');
 
         return view('informations', [
-            'search' => $search, 
-            'list'   => $result
+            'search' => $search,
+            'list'   => $result,
         ]);
     }
 

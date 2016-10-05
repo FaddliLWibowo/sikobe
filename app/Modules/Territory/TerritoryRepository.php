@@ -9,34 +9,32 @@ namespace App\Modules\Territory;
  * file that was distributed with this source code.
  */
 
-use RuntimeException;
-use App\Modules\Territory\RecordNotFoundException;
 
 class TerritoryRepository implements Repository
 {
     /**
-     * Model Province
+     * Model Province.
      *
      * @var \App\Modules\Territory\Models\Province
      */
     protected $modelProvince;
 
     /**
-     * Model Regency
+     * Model Regency.
      *
      * @var \App\Modules\Territory\Models\Regency
      */
     protected $modelRegency;
 
     /**
-     * Model District
+     * Model District.
      *
      * @var \App\Modules\Territory\Models\District
      */
     protected $modelDistrict;
 
     /**
-     * Model Village
+     * Model Village.
      *
      * @var \App\Modules\Territory\Models\Village
      */
@@ -45,7 +43,7 @@ class TerritoryRepository implements Repository
     /**
      * Current total query rows.
      *
-     * @var integer
+     * @var int
      */
     protected $total = 0;
 
@@ -53,20 +51,19 @@ class TerritoryRepository implements Repository
      * Create a new instance.
      *
      * @param string $model
-     * 
+     *
      * @return void
      */
-    public function __construct(#
-        $modelProvince, 
-        $modelRegency, 
-        $modelDistrict, 
+    public function __construct(//
+        $modelProvince,
+        $modelRegency,
+        $modelDistrict,
         $modelVillage
-    )
-    {
+    ) {
         $this->modelProvince = $modelProvince;
-        $this->modelRegency  = $modelRegency;
+        $this->modelRegency = $modelRegency;
         $this->modelDistrict = $modelDistrict;
-        $this->modelVillage  = $modelVillage;
+        $this->modelVillage = $modelVillage;
     }
 
     /**
@@ -110,7 +107,7 @@ class TerritoryRepository implements Repository
     {
         $item = $this->createModelProvince()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -120,11 +117,11 @@ class TerritoryRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function searchRegencies(Array $params = [], $page = 1, $limit = 10)
+    public function searchRegencies(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'province_id' => '', 
-            'order_by'    => 'id'
+            'province_id' => '',
+            'order_by'    => 'id',
         ], $params);
 
         $model = $this->createModelRegency();
@@ -139,7 +136,7 @@ class TerritoryRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $useWhere = true;
         }
 
@@ -147,7 +144,7 @@ class TerritoryRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -167,7 +164,7 @@ class TerritoryRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $query->where($model->getTable().'.province_id', '=', $params['province_id']);
         }
 
@@ -191,7 +188,7 @@ class TerritoryRepository implements Repository
     {
         $item = $this->createModelRegency()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -201,16 +198,16 @@ class TerritoryRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function searchDistricts(Array $params = [], $page = 1, $limit = 10)
+    public function searchDistricts(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'province_id' => '', 
-            'regency_id'  => '', 
-            'order_by'    => 'id'
+            'province_id' => '',
+            'regency_id'  => '',
+            'order_by'    => 'id',
         ], $params);
 
         $model = $this->createModelDistrict();
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $modelProvince = $this->createModelProvince();
             $modelRegency = $this->createModelRegency();
         }
@@ -222,15 +219,15 @@ class TerritoryRepository implements Repository
         $fromSql = '(';
         $fromSql .= 'SELECT';
         $fromSql .= ' `'.$model->getTable().'`.`id`';
-        
-        if ( ! empty($params['province_id'])) {
+
+        if (! empty($params['province_id'])) {
             $fromSql .= ', `'.$modelProvince->getTable().'`.`name` AS province';
             $fromSql .= ', `'.$modelRegency->getTable().'`.`name` AS regency';
         }
 
         $fromSql .= ' FROM `'.$model->getTable().'`';
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $fromSql .= ' LEFT JOIN `'.$modelRegency->getTable().'`';
             $fromSql .= ' ON `'.$model->getTable().'`.`regency_id`';
             $fromSql .= ' =';
@@ -245,7 +242,7 @@ class TerritoryRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['province_id'])
+        if (! empty($params['province_id'])
          || ! empty($params['regency_id'])) {
             $useWhere = true;
         }
@@ -254,7 +251,7 @@ class TerritoryRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -264,7 +261,7 @@ class TerritoryRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['regency_id'])) {
+        if (! empty($params['regency_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -284,29 +281,29 @@ class TerritoryRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $query->leftJoin(
-                $modelRegency->getTable(), 
-                $model->getTable().'.regency_id', 
-                '=', 
+                $modelRegency->getTable(),
+                $model->getTable().'.regency_id',
+                '=',
                 $modelRegency->getTable().'.id'
             );
         }
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $query->where($modelRegency->getTable().'.province_id', '=', $params['province_id']);
         }
 
-        if ( ! empty($params['regency_id'])) {
+        if (! empty($params['regency_id'])) {
             $query->where($model->getTable().'.regency_id', '=', $params['regency_id']);
         }
 
         $this->total = $query->count();
 
         $select = [
-            $model->getTable().'.*'
+            $model->getTable().'.*',
         ];
-        if ( ! empty($params['regency_id'])) {
+        if (! empty($params['regency_id'])) {
             $select[] = 'o.province';
             $select[] = 'o.regency';
         }
@@ -329,7 +326,7 @@ class TerritoryRepository implements Repository
     {
         $item = $this->createModelDistrict()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -339,19 +336,19 @@ class TerritoryRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function searchVillages(Array $params = [], $page = 1, $limit = 10)
+    public function searchVillages(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'area_table'  => '', 
-            'province_id' => '', 
-            'regency_id'  => '', 
-            'district_id' => '', 
-            'order_by'    => 'id'
+            'area_table'  => '',
+            'province_id' => '',
+            'regency_id'  => '',
+            'district_id' => '',
+            'order_by'    => 'id',
         ], $params);
 
         $model = $this->createModelVillage();
 
-        if ( ! empty($params['province_id']) || ! empty($params['province_id'])) {
+        if (! empty($params['province_id']) || ! empty($params['province_id'])) {
             $modelRegency = $this->createModelRegency();
             $modelDistrict = $this->createModelDistrict();
         }
@@ -363,15 +360,15 @@ class TerritoryRepository implements Repository
         $fromSql = '(';
         $fromSql .= 'SELECT';
         $fromSql .= ' `'.$model->getTable().'`.`id`';
-        
-        if ( ! empty($params['regency_id'])) {
+
+        if (! empty($params['regency_id'])) {
             $fromSql .= ', `'.$modelRegency->getTable().'`.`name` AS regency';
             $fromSql .= ', `'.$modelDistrict->getTable().'`.`name` AS district';
         }
 
         $fromSql .= ' FROM `'.$model->getTable().'`';
 
-        if ( ! empty($params['province_id']) || ! empty($params['province_id'])) {
+        if (! empty($params['province_id']) || ! empty($params['province_id'])) {
             $fromSql .= ' LEFT JOIN `'.$modelDistrict->getTable().'`';
             $fromSql .= ' ON `'.$model->getTable().'`.`district_id`';
             $fromSql .= ' =';
@@ -386,7 +383,7 @@ class TerritoryRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['province_id'])
+        if (! empty($params['province_id'])
          || ! empty($params['regency_id'])
          || ! empty($params['district_id'])) {
             $useWhere = true;
@@ -396,7 +393,7 @@ class TerritoryRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -406,7 +403,7 @@ class TerritoryRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['regency_id'])) {
+        if (! empty($params['regency_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -416,7 +413,7 @@ class TerritoryRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['district_id'])) {
+        if (! empty($params['district_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -426,7 +423,7 @@ class TerritoryRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['area_table'])) {
+        if (! empty($params['area_table'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -449,37 +446,37 @@ class TerritoryRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['regency_id'])) {
+        if (! empty($params['regency_id'])) {
             $query->leftJoin(
-                $modelDistrict->getTable(), 
-                $model->getTable().'.district_id', 
-                '=', 
+                $modelDistrict->getTable(),
+                $model->getTable().'.district_id',
+                '=',
                 $modelDistrict->getTable().'.id'
             );
         }
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $query->leftJoin(
-                $modelRegency->getTable(), 
-                $modelDistrict->getTable().'.regency_id', 
-                '=', 
+                $modelRegency->getTable(),
+                $modelDistrict->getTable().'.regency_id',
+                '=',
                 $modelRegency->getTable().'.id'
             );
         }
 
-        if ( ! empty($params['province_id'])) {
+        if (! empty($params['province_id'])) {
             $query->where($modelRegency->getTable().'.province_id', '=', $params['province_id']);
         }
 
-        if ( ! empty($params['regency_id'])) {
+        if (! empty($params['regency_id'])) {
             $query->where($modelDistrict->getTable().'.regency_id', '=', $params['regency_id']);
         }
 
-        if ( ! empty($params['district_id'])) {
+        if (! empty($params['district_id'])) {
             $query->where($model->getTable().'.district_id', '=', $params['district_id']);
         }
 
-        if ( ! empty($params['area_table'])) {
+        if (! empty($params['area_table'])) {
             $whereRaw = ' `'.$model->getTable().'`.`id` IN (';
             $whereRaw .= 'SELECT `village_id` FROM `'.$params['area_table'].'`';
             $whereRaw .= ' WHERE `is_active` = 1';
@@ -491,9 +488,9 @@ class TerritoryRepository implements Repository
         $this->total = $query->count();
 
         $select = [
-            $model->getTable().'.*'
+            $model->getTable().'.*',
         ];
-        if ( ! empty($params['regency_id'])) {
+        if (! empty($params['regency_id'])) {
             $select[] = 'o.regency';
             $select[] = 'o.district';
         }
@@ -516,7 +513,7 @@ class TerritoryRepository implements Repository
     {
         $item = $this->createModelVillage()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 

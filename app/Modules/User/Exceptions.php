@@ -9,4 +9,6 @@ namespace App\Modules\User;
  * file that was distributed with this source code.
  */
 
-class RecordNotFoundException extends \UnexpectedValueException {}
+class Exceptions extends \UnexpectedValueException
+{
+}

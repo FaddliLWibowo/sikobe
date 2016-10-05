@@ -10,15 +10,10 @@ namespace App\Presenter\Api\Area;
  */
 
 use App\Support\Str;
-
 use League\Fractal\TransformerAbstract;
-
 use App\Modules\Area\Models\Status as StatusContract;
-
 use App\Services\File as FileService;
-
 use App\Presenter\Api\File;
-
 use DateTime;
 
 class Status extends TransformerAbstract
@@ -34,12 +29,12 @@ class Status extends TransformerAbstract
      * {@inheritdoc}
      */
     protected $availableIncludes = [
-        'photos', 
-        'area'
+        'photos',
+        'area',
     ];
 
     /**
-     * Turn this item object into a generic array
+     * Turn this item object into a generic array.
      *
      * @param  StatusContract $item
      *
@@ -48,18 +43,18 @@ class Status extends TransformerAbstract
     public function transform(StatusContract $item)
     {
         return [
-            'id'                => (int) $item->id, 
-            'identifier'        => $item->identifier, 
-            'short_description' => Str::words($item->description, 20, '...'), 
-            'description'       => $item->description, 
-            'scale'             => (int) $item->scale, 
-            'datetime'          => new DateTime($item->datetime), 
-            'created_at'        => $item->created_at
+            'id'                => (int) $item->id,
+            'identifier'        => $item->identifier,
+            'short_description' => Str::words($item->description, 20, '...'),
+            'description'       => $item->description,
+            'scale'             => (int) $item->scale,
+            'datetime'          => new DateTime($item->datetime),
+            'created_at'        => $item->created_at,
         ];
     }
 
     /**
-     * Include photos
+     * Include photos.
      *
      * @param  StatusContract $status
      *
@@ -68,15 +63,15 @@ class Status extends TransformerAbstract
     public function includePhotos(StatusContract $status)
     {
         list($files) = $this->getFileService()->search([
-            'object_type' => 'area_status', 
-            'object_id'   => $status->id
+            'object_type' => 'area_status',
+            'object_id'   => $status->id,
         ], 1, 0);
 
         return $this->collection($files, new File);
     }
 
     /**
-     * Include Area
+     * Include Area.
      *
      * @param  StatusContract $status
      *
@@ -100,5 +95,4 @@ class Status extends TransformerAbstract
 
         return $this->fileService;
     }
-
 }

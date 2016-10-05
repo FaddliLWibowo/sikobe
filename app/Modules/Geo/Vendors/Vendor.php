@@ -15,7 +15,7 @@ interface Vendor
      * Locate geo based on IP address.
      *
      * @param  string $ipAddress
-     * 
+     *
      * @return array
      * @throws App\Modules\Geo\RecordNotFoundException
      */

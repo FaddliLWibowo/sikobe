@@ -16,9 +16,9 @@ class Territory extends Service
     /**
      * Search province items.
      *
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return array
      * @throws \RuntimeException
      */
@@ -34,13 +34,13 @@ class Territory extends Service
      * Search regency items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return array
      * @throws \RuntimeException
      */
-    public function searchRegencies(Array $params = [], $page = 1, $limit = 10)
+    public function searchRegencies(array $params = [], $page = 1, $limit = 10)
     {
         $repository = $this->getTerritoryRepository();
         $collection = $repository->searchRegencies($params, $page, $limit);
@@ -52,13 +52,13 @@ class Territory extends Service
      * Search district items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return array
      * @throws \RuntimeException
      */
-    public function searchDistricts(Array $params = [], $page = 1, $limit = 10)
+    public function searchDistricts(array $params = [], $page = 1, $limit = 10)
     {
         $repository = $this->getTerritoryRepository();
         $collection = $repository->searchDistricts($params, $page, $limit);
@@ -70,13 +70,13 @@ class Territory extends Service
      * Search village items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return array
      * @throws \RuntimeException
      */
-    public function searchVillages(Array $params = [], $page = 1, $limit = 10)
+    public function searchVillages(array $params = [], $page = 1, $limit = 10)
     {
         $repository = $this->getTerritoryRepository();
         $collection = $repository->searchVillages($params, $page, $limit);
@@ -87,8 +87,8 @@ class Territory extends Service
     /**
      * Return a province.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\Province
      * @throws \App\Modules\Territory\RecordNotFoundException
      */
@@ -100,8 +100,8 @@ class Territory extends Service
     /**
      * Return a regency.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\Regency
      * @throws \App\Modules\Territory\RecordNotFoundException
      */
@@ -113,8 +113,8 @@ class Territory extends Service
     /**
      * Return a district.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\District
      * @throws \App\Modules\Territory\RecordNotFoundException
      */
@@ -126,8 +126,8 @@ class Territory extends Service
     /**
      * Return a village.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\Village
      * @throws \App\Modules\Territory\RecordNotFoundException
      */

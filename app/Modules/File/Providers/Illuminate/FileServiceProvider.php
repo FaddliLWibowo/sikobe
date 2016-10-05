@@ -10,7 +10,6 @@ namespace App\Modules\File\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\File\Repository;
 use App\Modules\File\FileRepository;
 
@@ -34,7 +33,7 @@ class FileServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Repository::class, function() {
+        $this->app->singleton(Repository::class, function () {
             return new FileRepository(
                 \App\Modules\File\Models\Eloquent\File::class
             );

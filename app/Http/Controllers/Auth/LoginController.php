@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
 use Carbon\Carbon;
-
 use App\Modules\Geo\Location as GeoLocation;
 use App\Modules\Geo\EntityInterface as GeoEntity;
-
 use App\User;
 
 class LoginController extends Controller
@@ -42,7 +39,7 @@ class LoginController extends Controller
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->middleware('guest', ['except' => 'logout']);
     }
 
@@ -59,14 +56,14 @@ class LoginController extends Controller
      *
      * @param  Request $request
      * @param  User    $user
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     private function doVerification(Request $request, User $user)
     {
         $geoRecord = $this->getOriginCountry();
 
-        if ( ! ($geoRecord instanceOf GeoEntity)) {
+        if (! ($geoRecord instanceof GeoEntity)) {
             return $geoRecord;
         }
 
@@ -77,7 +74,7 @@ class LoginController extends Controller
 
     /**
      * Get user current origin country.
-     * 
+     *
      * @return \App\Modules\Geo\EntityInterface || \Illuminate\Http\Response
      */
     private function getOriginCountry()
@@ -100,32 +97,32 @@ class LoginController extends Controller
      *
      * @param  User      $user
      * @param  GeoEntity $geoRecord
-     * 
+     *
      * @return \App\Modules\User\Models\UserLoginHistory
      */
     private function saveActivity(User $user, GeoEntity $geoRecord)
     {
-        $activity      = null;
-        $browserInfo   = $this->browserInfo();
+        $activity = null;
+        $browserInfo = $this->browserInfo();
         $totalActivity = $user->loginActivities()->count();
 
         $data = [
-            'user_id'               => $user->id, 
-            'ip_address'            => $_SERVER['REMOTE_ADDR'], 
-            'country_code'          => $geoRecord->countryCode, 
-            'country_name'          => $geoRecord->countryName, 
-            'os_family'             => (isset($browserInfo['osFamily'])) ? strip_tags($browserInfo['osFamily']) : '', 
-            'is_mobile'             => (isset($browserInfo['isMobile'])) ? (int) $browserInfo['isMobile'] : 0, 
-            'is_tablet'             => (isset($browserInfo['isTablet'])) ? (int) $browserInfo['isTablet'] : 0, 
-            'is_desktop'            => (isset($browserInfo['isDesktop'])) ? (int) $browserInfo['isDesktop'] : 0, 
-            'browser_family'        => (isset($browserInfo['browserFamily'])) ? strip_tags($browserInfo['browserFamily']) : '', 
-            'browser_version_major' => (isset($browserInfo['browserVersionMajor'])) ? (int) $browserInfo['browserVersionMajor'] : 0, 
-            'browser_version_minor' => (isset($browserInfo['browserVersionMinor'])) ? (int) $browserInfo['browserVersionMinor'] : 0, 
-            'browser_version_patch' => (isset($browserInfo['browserVersionPatch'])) ? (int) $browserInfo['browserVersionPatch'] : 0, 
-            'device_family'         => (isset($browserInfo['deviceFamily'])) ? strip_tags($browserInfo['deviceFamily']) : '', 
-            'device_model'          => (isset($browserInfo['deviceModel'])) ? strip_tags($browserInfo['deviceModel']) : '', 
-            'is_saved'              => ($totalActivity > 0) ? 0 : 1, 
-            'last_activity'         => new \DateTime()
+            'user_id'               => $user->id,
+            'ip_address'            => $_SERVER['REMOTE_ADDR'],
+            'country_code'          => $geoRecord->countryCode,
+            'country_name'          => $geoRecord->countryName,
+            'os_family'             => (isset($browserInfo['osFamily'])) ? strip_tags($browserInfo['osFamily']) : '',
+            'is_mobile'             => (isset($browserInfo['isMobile'])) ? (int) $browserInfo['isMobile'] : 0,
+            'is_tablet'             => (isset($browserInfo['isTablet'])) ? (int) $browserInfo['isTablet'] : 0,
+            'is_desktop'            => (isset($browserInfo['isDesktop'])) ? (int) $browserInfo['isDesktop'] : 0,
+            'browser_family'        => (isset($browserInfo['browserFamily'])) ? strip_tags($browserInfo['browserFamily']) : '',
+            'browser_version_major' => (isset($browserInfo['browserVersionMajor'])) ? (int) $browserInfo['browserVersionMajor'] : 0,
+            'browser_version_minor' => (isset($browserInfo['browserVersionMinor'])) ? (int) $browserInfo['browserVersionMinor'] : 0,
+            'browser_version_patch' => (isset($browserInfo['browserVersionPatch'])) ? (int) $browserInfo['browserVersionPatch'] : 0,
+            'device_family'         => (isset($browserInfo['deviceFamily'])) ? strip_tags($browserInfo['deviceFamily']) : '',
+            'device_model'          => (isset($browserInfo['deviceModel'])) ? strip_tags($browserInfo['deviceModel']) : '',
+            'is_saved'              => ($totalActivity > 0) ? 0 : 1,
+            'last_activity'         => new \DateTime(),
         ];
 
         unset($browserInfo);
@@ -149,15 +146,15 @@ class LoginController extends Controller
             if (is_object($activity)) {
                 $createdAt = new Carbon($activity->created_at);
                 $currentAt = new Carbon();
-                
+
                 if ($createdAt->diffInDays($currentAt, false) < 30) {
                     $activity->last_activity = new \DateTime();
-                    $activity->save();   
+                    $activity->save();
                 }
             }
         }
 
-        if ( ! is_object($activity)) {
+        if (! is_object($activity)) {
             $activity = $user->loginActivities()->create($data);
         }
 
@@ -167,7 +164,7 @@ class LoginController extends Controller
     /**
      * Get current browser info.
      *
-     * @return Array
+     * @return array
      */
     private function browserInfo()
     {

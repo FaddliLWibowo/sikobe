@@ -10,9 +10,7 @@ namespace App\Modules\Area\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\Area\Models\Status as StatusInterface;
-
 use App\Presenter\Area\Status as StatusPresenter;
 use App\Contracts\Presentable;
 
@@ -29,12 +27,12 @@ class Status extends Model implements StatusInterface, Presentable
      * {@inheritdoc}
      */
     protected $fillable = [
-        'identifier', 
-        'area_id', 
-        'author_id', 
-        'description', 
-        'scale', 
-        'datetime'
+        'identifier',
+        'area_id',
+        'author_id',
+        'description',
+        'scale',
+        'datetime',
     ];
 
     /**

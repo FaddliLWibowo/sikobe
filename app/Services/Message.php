@@ -11,13 +11,9 @@ namespace App\Services;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
-use App\Services\Service;
 use App\Services\Validators\Message as MessageValidator;
-
 use App\Modules\Message\Repository;
 
-use RuntimeException;
 
 class Message extends Service
 {
@@ -25,22 +21,22 @@ class Message extends Service
      * Search black list items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
+     * @param  int $page
+     * @param  int $limit
      *
      * @return array
      * @throws \RuntimeException
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $repository = $this->getMessageRepository();
         $collection = $repository->search($params, $page, $limit);
 
         return new LengthAwarePaginator(
-            $collection->all(), 
-            $repository->getTotal(), 
-            $limit, 
-            $page, 
+            $collection->all(),
+            $repository->getTotal(),
+            $limit,
+            $page,
             ['path' => Paginator::resolveCurrentPath()]
         );
     }
@@ -53,7 +49,7 @@ class Message extends Service
      * @return \Illuminate\Validation\Validator|App\Modules\Message\Models\Message
      * @throws \RuntimeException
      */
-    public function create(Array $fields)
+    public function create(array $fields)
     {
         // Validate request data
         $validator = $this->getValidator();
@@ -70,11 +66,11 @@ class Message extends Service
         $email = (isset($fields['sender'])) ? $request->get($fields['email']) : '';
 
         return $this->getMessageRepository()->create([
-            'title'   => 'Pesan dari '.trim($sender), 
-            'content' => trim($content), 
-            'sender'  => trim($sender), 
-            'phone'   => trim($phone), 
-            'email'   => trim($email)
+            'title'   => 'Pesan dari '.trim($sender),
+            'content' => trim($content),
+            'sender'  => trim($sender),
+            'phone'   => trim($phone),
+            'email'   => trim($email),
         ]);
     }
 

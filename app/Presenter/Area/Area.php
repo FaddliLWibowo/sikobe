@@ -10,11 +10,8 @@ namespace App\Presenter\Area;
  */
 
 use Illuminate\Support\Collection;
-
 use App\Presenter\Presenter;
-
 use App\Modules\Area\Models\Area as AreaContract;
-
 use App\Services\File as FileService;
 
 class Area extends Presenter
@@ -44,11 +41,11 @@ class Area extends Presenter
      */
     public function presentFiles()
     {
-        if ( ! empty($this->object->id)) {
+        if (! empty($this->object->id)) {
             if (is_null($this->_files)) {
                 list($this->_files) = $this->getFileService()->search([
-                    'object_type' => 'area', 
-                    'object_id'   => $this->object->id
+                    'object_type' => 'area',
+                    'object_id'   => $this->object->id,
                 ], 1, 0);
             }
         } else {

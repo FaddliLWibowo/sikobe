@@ -10,7 +10,6 @@ namespace App\Modules\Territory\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\Territory\Models\Village as VillageInterface;
 
 class Village extends Model implements VillageInterface
@@ -26,8 +25,8 @@ class Village extends Model implements VillageInterface
      * {@inheritdoc}
      */
     protected $fillable = [
-        'district_id', 
-        'name'
+        'district_id',
+        'name',
     ];
 
     /**

@@ -10,16 +10,11 @@ namespace App\Services;
  */
 
 use App\Modules\CommandPost\Repository;
-
-use Storage;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
 use App\Services\Territory as TerritoryService;
 use App\Services\File as FileService;
 
-use RuntimeException;
-use App\Modules\CommandPost\RecordNotFoundException;
 
 class CommandPost extends Service
 {
@@ -27,26 +22,26 @@ class CommandPost extends Service
      * Search items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return array
      * @throws \RuntimeException
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'district_id' => '', 
-            'village_id'  => ''
+            'district_id' => '',
+            'village_id'  => '',
         ], $params);
 
-        if ( ! empty($params['district_id']) && empty($params['village_id'])) {
+        if (! empty($params['district_id']) && empty($params['village_id'])) {
             list($vilages) = $this->getTerritoryService()->searchVillages([
-                'district_id' => $params['district_id']
+                'district_id' => $params['district_id'],
             ], 1, 0);
 
             $vilageIds = [];
-            if ( ! $vilages->isEmpty()) {
+            if (! $vilages->isEmpty()) {
                 foreach ($vilages as $village) {
                     $vilageIds[] = $village->id;
                 }
@@ -61,10 +56,10 @@ class CommandPost extends Service
         $collection = $repository->search($params, $page, $limit);
 
         return new LengthAwarePaginator(
-            $collection->all(), 
-            $repository->getTotal(), 
-            ($limit > 0) ? $limit : 1, 
-            $page, 
+            $collection->all(),
+            $repository->getTotal(),
+            ($limit > 0) ? $limit : 1,
+            $page,
             ['path' => Paginator::resolveCurrentPath()]
         );
     }
@@ -72,8 +67,8 @@ class CommandPost extends Service
     /**
      * Return a item.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Area\Models\Area
      * @throws \App\Modules\Area\RecordNotFoundException
      */
@@ -85,8 +80,8 @@ class CommandPost extends Service
     /**
      * Return item photos.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \Collection
      * @throws \App\Modules\Area\RecordNotFoundException
      */
@@ -95,8 +90,8 @@ class CommandPost extends Service
         $post = $this->get($id);
 
         list($files) = $this->getFileService()->search([
-            'object_type' => 'posko', 
-            'object_id'   => $post->id
+            'object_type' => 'posko',
+            'object_id'   => $post->id,
         ], 1, 0);
 
         return $files;

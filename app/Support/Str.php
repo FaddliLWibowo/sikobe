@@ -11,16 +11,15 @@ namespace App\Support;
 
 class Str extends \Illuminate\Support\Str
 {
-
     /**
      * Generate a random numeric string.
      *
-     * @param    integer $length
-     * @return integer
+     * @param    int $length
+     * @return int
      */
     public static function randomNumeric($length = 16)
     {
-        if ( ! $length or $length < 1 or $length > 100) {
+        if (! $length or $length < 1 or $length > 100) {
             $length = 100;
         }
 
@@ -28,7 +27,7 @@ class Str extends \Illuminate\Support\Str
         $i = 0;
 
         do {
-            $s .= chr(mt_rand(48,57));
+            $s .= chr(mt_rand(48, 57));
             $i++;
         } while ($i < $length);
 
@@ -38,13 +37,13 @@ class Str extends \Illuminate\Support\Str
     /**
      * Return human readable file size.
      *
-     * @param    
+     * @param
      * @return string
      */
     public static function humanReadableFileSize($size)
     {
-        $filesizename = array(' Bytes', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB');
-        return $size ? round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $filesizename[$i] : '0 Bytes';
-    }
+        $filesizename = [' Bytes', ' KB', ' MB', ' GB', ' TB', ' PB', ' EB', ' ZB', ' YB'];
 
+        return $size ? round($size / pow(1024, ($i = floor(log($size, 1024)))), 2).$filesizename[$i] : '0 Bytes';
+    }
 }

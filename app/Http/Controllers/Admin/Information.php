@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 /*
  * Author: Antonio Saiful Islam <finallyantonio@gmail.com>.
  *
@@ -8,33 +9,31 @@ namespace App\Http\Controllers\Admin;
  * file that was distributed with this source code.
  */
  use Illuminate\Http\Request;
- use Illuminate\Validation\Validator;
+use App\Services\Collection as CollectionService;
+use RuntimeException;
+use App\Modules\Collection\Models\Eloquent\Collection as Model;
 
- use App\Services\Collection as CollectionService;
- use RuntimeException;
-
- use App\Modules\Collection\Models\Eloquent\Collection as Model;
-
-class Information extends Controller
-{
-    /**
+ class Information extends Controller
+ {
+     /**
      * Display a listing of the resource.
-     * Code Owner : Antonio Saiful Islam
+     * Code Owner : Antonio Saiful Islam.
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-      $limit = 10;
-      $page  = (int) $request->get('page', 1);
-      $service = $this->getService();
-      $result = $service->search([], $page, $limit);
+        $limit = 10;
+        $page = (int) $request->get('page', 1);
+        $service = $this->getService();
+        $result = $service->search([], $page, $limit);
 
-      $result = $service->search([], $page, $limit);
+        $result = $service->search([], $page, $limit);
 
-      return view('admin.information.list', [
-          'list' => $result
+        return view('admin.information.list', [
+          'list' => $result,
       ]);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,6 +42,7 @@ class Information extends Controller
     public function create()
     {
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -51,14 +51,16 @@ class Information extends Controller
      */
     public function store(Request $request)
     {
-      $data = $request->all();
-      $data['author_id'] = $this->user->id;
-      $information = Model::create($data);
-      if ($information) {
-        return redirect('/ctrl/information')->with('success', 'Informasi Berhasil Ditambahkan');
-      }
-      return redirect('/ctrl/information')->with('error', 'Informasi Gagal Ditambahkan');
+        $data = $request->all();
+        $data['author_id'] = $this->user->id;
+        $information = Model::create($data);
+        if ($information) {
+            return redirect('/ctrl/information')->with('success', 'Informasi Berhasil Ditambahkan');
+        }
+
+        return redirect('/ctrl/information')->with('error', 'Informasi Gagal Ditambahkan');
     }
+
     /**
      * Display the specified resource.
      *
@@ -69,6 +71,7 @@ class Information extends Controller
     {
         //
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -79,6 +82,7 @@ class Information extends Controller
     {
         //
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -99,11 +103,13 @@ class Information extends Controller
         } catch (RuntimeException $e) {
             abort(500);
         }
+
         return view('admin.information.form', [
             // 'data'      => new AreaPresenter($data)
-            'data'  => $data
+            'data'  => $data,
         ]);
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -113,13 +119,15 @@ class Information extends Controller
      */
     public function update(Request $request)
     {
-      $data = $request->all();
-      $information = Model::find($request->input('id'));
-      if ($information->update($data)) {
-        return redirect('/ctrl/information')->with('success', 'Informasi Berhasil Diperbaharui');
-      }
-      return redirect('/ctrl/information')->with('error', 'Informasi Gagal Diperbaharui');
+        $data = $request->all();
+        $information = Model::find($request->input('id'));
+        if ($information->update($data)) {
+            return redirect('/ctrl/information')->with('success', 'Informasi Berhasil Diperbaharui');
+        }
+
+        return redirect('/ctrl/information')->with('error', 'Informasi Gagal Diperbaharui');
     }
+
     /**
      * Search the specified resource from storage.
      *
@@ -128,9 +136,10 @@ class Information extends Controller
      */
     public function search(Request $request)
     {
-      $service = $this->getService();
-      $response = $service->search($request->all());
+        $service = $this->getService();
+        $response = $service->search($request->all());
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -148,16 +157,20 @@ class Information extends Controller
         } catch (RecordNotFoundException $e) {
             abort(404);
         }
-        if ( ! $isDeleted) {
+        if (! $isDeleted) {
             $request->session()->flash('error', 'Terjadi kesalahan ketika menghapus!');
+
             return back();
         }
         $request->session()->flash('success', 'Berhasil dihapus!');
+
         return redirect('/ctrl/information');
     }
-    private function getService()
-    {
-        $service = new CollectionService();
-        return $service;
-    }
-}
+
+     private function getService()
+     {
+         $service = new CollectionService();
+
+         return $service;
+     }
+ }

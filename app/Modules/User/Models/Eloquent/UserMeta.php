@@ -10,12 +10,10 @@ namespace App\Modules\User\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\User\Models\UserMeta as UserMetaInterface;
 
 class UserMeta extends Model implements UserMetaInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -25,9 +23,8 @@ class UserMeta extends Model implements UserMetaInterface
      * {@inheritdoc}
      */
     protected $fillable = [
-        'user_id', 
-        'handle', 
-        'value'
+        'user_id',
+        'handle',
+        'value',
     ];
-
 }

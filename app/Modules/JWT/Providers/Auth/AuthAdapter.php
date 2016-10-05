@@ -10,7 +10,6 @@ namespace App\Modules\JWT\Providers\Auth;
  */
 
 use Tymon\JWTAuth\Providers\Auth\AuthInterface;
-
 use App\Token;
 
 class AuthAdapter implements AuthInterface

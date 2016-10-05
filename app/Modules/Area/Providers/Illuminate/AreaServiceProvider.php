@@ -10,7 +10,6 @@ namespace App\Modules\Area\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\Area\Repository;
 use App\Modules\Area\AreaRepository;
 
@@ -34,9 +33,9 @@ class AreaServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Repository::class, function() {
+        $this->app->singleton(Repository::class, function () {
             return new AreaRepository(
-                \App\Modules\Area\Models\Eloquent\Area::class, 
+                \App\Modules\Area\Models\Eloquent\Area::class,
                 \App\Modules\Area\Models\Eloquent\Status::class
             );
         });

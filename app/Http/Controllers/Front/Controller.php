@@ -10,10 +10,8 @@ namespace App\Http\Controllers\Front;
  */
 
 use Tymon\JWTAuth\JWTAuth;
-
 use App\Http\Controllers\Controller as BaseController;
 use App\Support\Asset;
-
 use App\Token;
 
 class Controller extends BaseController
@@ -34,7 +32,7 @@ class Controller extends BaseController
 
     /**
      * Create a new controller instance.
-     * 
+     *
      * @param  Tymon\JWTAuth\JWTAuth  $JWTAuth
      *
      * @return void
@@ -51,14 +49,14 @@ class Controller extends BaseController
         }
 
         $apiParams = [
-            'url'     => env('API_SCHEME').'://'.env('API_DOMAIN'), 
+            'url'     => env('API_SCHEME').'://'.env('API_DOMAIN'),
             'headers' => [
-                'Accept' => 'application/'.env('API_STANDARDS_TREE').'..v1+json'
-            ], 
-            'token'   => $this->JWT
+                'Accept' => 'application/'.env('API_STANDARDS_TREE').'..v1+json',
+            ],
+            'token'   => $this->JWT,
         ];
         $scripts = 'var apiClient = ddClient('.json_encode($apiParams).');';
-        
+
         Asset::addScript($scripts, 'footer.scripts');
     }
 }

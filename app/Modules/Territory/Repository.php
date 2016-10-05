@@ -14,9 +14,9 @@ interface Repository
     /**
      * Return province items.
      *
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return \Collection
      */
     public function searchProvinces($page = 1, $limit = 10);
@@ -24,10 +24,10 @@ interface Repository
     /**
      * Find province by it's ID.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\Province
-     * 
+     *
      * @throws \App\Modules\Territory\RecordNotFoundException
      */
     public function findProvince($id);
@@ -36,20 +36,20 @@ interface Repository
      * Return regency items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return \Collection
      */
-    public function searchRegencies(Array $params = [], $page = 1, $limit = 10);
+    public function searchRegencies(array $params = [], $page = 1, $limit = 10);
 
     /**
      * Find regency by it's ID.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\Regency
-     * 
+     *
      * @throws \App\Modules\Territory\RecordNotFoundException
      */
     public function findRegency($id);
@@ -58,20 +58,20 @@ interface Repository
      * Return district items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return \Collection
      */
-    public function searchDistricts(Array $params = [], $page = 1, $limit = 10);
+    public function searchDistricts(array $params = [], $page = 1, $limit = 10);
 
     /**
      * Find district by it's ID.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\District
-     * 
+     *
      * @throws \App\Modules\Territory\RecordNotFoundException
      */
     public function findDistrict($id);
@@ -80,20 +80,20 @@ interface Repository
      * Return village items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return \Collection
      */
-    public function searchVillages(Array $params = [], $page = 1, $limit = 10);
+    public function searchVillages(array $params = [], $page = 1, $limit = 10);
 
     /**
      * Find village by it's ID.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\Territory\Models\Village
-     * 
+     *
      * @throws \App\Modules\Territory\RecordNotFoundException
      */
     public function findVillage($id);
@@ -101,7 +101,7 @@ interface Repository
     /**
      * Return latest query total items.
      *
-     * @return integer
+     * @return int
      */
     public function getTotal();
 }

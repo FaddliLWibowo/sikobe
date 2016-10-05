@@ -10,7 +10,6 @@ namespace App\Modules\Territory\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\Territory\Models\Regency as RegencyInterface;
 
 class Regency extends Model implements RegencyInterface
@@ -27,7 +26,7 @@ class Regency extends Model implements RegencyInterface
      */
     protected $fillable = [
         'province_id',
-        'name'
+        'name',
     ];
 
     public function province()

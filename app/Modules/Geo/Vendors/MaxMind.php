@@ -10,7 +10,6 @@ namespace App\Modules\Geo\Vendors;
  */
 
 use GeoIp2\Database\Reader;
-
 use GeoIp2\Exception\GeoIp2Exception;
 use App\Modules\Geo\RecordNotFoundException;
 
@@ -27,12 +26,12 @@ class MaxMind implements Vendor
      * Create a new instance.
      *
      * @param  string  $db
-     * 
+     *
      * @return void
      */
     public function __construct($db)
     {
-        $this->db  = $db;
+        $this->db = $db;
     }
 
     /**
@@ -42,7 +41,7 @@ class MaxMind implements Vendor
     {
         $countryCode = null;
         $countryName = null;
-        $recordRaw   = null;
+        $recordRaw = null;
 
         // Check IP Address in local maxmind db
         try {
@@ -51,7 +50,7 @@ class MaxMind implements Vendor
 
             $countryCode = $record->country->isoCode;
             $countryName = $record->country->names['en'];
-            $recordRaw   = json_encode($record);
+            $recordRaw = json_encode($record);
 
             unset($reader);
             unset($record);

@@ -9,19 +9,13 @@ namespace App\Presenter\Api;
  * file that was distributed with this source code.
  */
 
-use App\Support\Str;
 
 use League\Fractal\TransformerAbstract;
-
 use App\Services\Territory as TerritoryService;
 use App\Services\File as FileService;
-
 use App\Modules\CommandPost\Models\CommandPost as CommandPostContract;
-
 use App\Presenter\Api\Territories\District;
 use App\Presenter\Api\Territories\Village;
-use App\Presenter\Api\File;
-
 use App\Modules\Territory\RecordNotFoundException as TerritoryRecordNotFoundException;
 
 class CommandPost extends TransformerAbstract
@@ -44,14 +38,14 @@ class CommandPost extends TransformerAbstract
      * {@inheritdoc}
      */
     protected $availableIncludes = [
-        'area', 
-        'district', 
-        'village', 
-        'photos'
+        'area',
+        'district',
+        'village',
+        'photos',
     ];
 
     /**
-     * Turn this item object into a generic array
+     * Turn this item object into a generic array.
      *
      * @param  CommandPostContract $item
      *
@@ -60,26 +54,26 @@ class CommandPost extends TransformerAbstract
     public function transform(CommandPostContract $item)
     {
         return [
-            'id'         => (int) $item->id, 
-            'title'      => $item->title, 
-            'address'    => $item->address, 
-            'leader'     => $item->leader, 
-            'phone'      => $item->phone, 
-            'latitude'   => (float) $item->latitude, 
-            'longitude'  => (float) $item->longitude, 
-            'status'     => $item->status, 
-            'created_at' => $item->created_at, 
+            'id'         => (int) $item->id,
+            'title'      => $item->title,
+            'address'    => $item->address,
+            'leader'     => $item->leader,
+            'phone'      => $item->phone,
+            'latitude'   => (float) $item->latitude,
+            'longitude'  => (float) $item->longitude,
+            'status'     => $item->status,
+            'created_at' => $item->created_at,
             'links'      => [
                 [
                     'rel' => 'self',
                     'uri' => '/command-posts/'.$item->id,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
     /**
-     * Include photos
+     * Include photos.
      *
      * @param  CommandPostContract $post
      *
@@ -88,15 +82,15 @@ class CommandPost extends TransformerAbstract
     public function includePhotos(CommandPostContract $post)
     {
         list($files) = $this->getFileService()->search([
-            'object_type' => 'posko', 
-            'object_id'   => $post->id
+            'object_type' => 'posko',
+            'object_id'   => $post->id,
         ], 1, 0);
 
         return $this->collection($files, new File);
     }
 
     /**
-     * Include District
+     * Include District.
      *
      * @param  CommandPostContract $post
      *
@@ -108,16 +102,15 @@ class CommandPost extends TransformerAbstract
             $village = $this->getTerritoryService()->getVillage($post->village_id);
 
             return $this->item(
-                $this->getTerritoryService()->getDistrict($village->district_id), 
+                $this->getTerritoryService()->getDistrict($village->district_id),
                 new District
             );
-        } catch (TerritoryRecordNotFoundException $e) {}
-
-        return null;
+        } catch (TerritoryRecordNotFoundException $e) {
+        }
     }
 
     /**
-     * Include Village
+     * Include Village.
      *
      * @param  CommandPostContract $post
      *
@@ -127,12 +120,11 @@ class CommandPost extends TransformerAbstract
     {
         try {
             return $this->item(
-                $this->getTerritoryService()->getVillage($post->village_id), 
+                $this->getTerritoryService()->getVillage($post->village_id),
                 new Village
             );
-        } catch (TerritoryRecordNotFoundException $e) {}
-
-        return null;
+        } catch (TerritoryRecordNotFoundException $e) {
+        }
     }
 
     /**
@@ -162,5 +154,4 @@ class CommandPost extends TransformerAbstract
 
         return $this->fileService;
     }
-
 }

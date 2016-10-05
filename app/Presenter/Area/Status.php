@@ -10,15 +10,11 @@ namespace App\Presenter\Area;
  */
 
 use Illuminate\Support\Collection;
-
 use App\Presenter\Presenter;
 use App\Presenter\User;
-
 use App\Modules\Area\Models\Status as StatusContract;
-
 use App\Services\User as UserService;
 use App\Services\File as FileService;
-
 use App\Modules\User\RecordNotFoundException;
 
 class Status extends Presenter
@@ -65,7 +61,7 @@ class Status extends Presenter
         if (is_null($this->_title)) {
             $this->_title = $this->object->area->title;
         }
-        
+
         return $this->_title;
     }
 
@@ -76,11 +72,11 @@ class Status extends Presenter
      */
     public function presentFiles()
     {
-        if ( ! empty($this->object->id)) {
+        if (! empty($this->object->id)) {
             if (is_null($this->_files)) {
                 list($this->_files) = $this->getFileService()->search([
-                    'object_type' => 'area_status', 
-                    'object_id'   => $this->object->id
+                    'object_type' => 'area_status',
+                    'object_id'   => $this->object->id,
                 ], 1, 0);
             }
         } else {
@@ -102,9 +98,10 @@ class Status extends Presenter
 
             try {
                 $this->_user = new User($service->get($this->object['author_id']));
-            } catch (RecordNotFoundException $e) {}
+            } catch (RecordNotFoundException $e) {
+            }
         }
-        
+
         return $this->_user;
     }
 

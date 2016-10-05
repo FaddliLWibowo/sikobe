@@ -10,7 +10,6 @@ namespace App\Modules\Collection\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\Collection\Repository;
 use App\Modules\Collection\CollectionRepository;
 
@@ -34,7 +33,7 @@ class CollectionServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Repository::class, function() {
+        $this->app->singleton(Repository::class, function () {
             return new CollectionRepository(
                 \App\Modules\Collection\Models\Eloquent\Collection::class
             );

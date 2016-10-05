@@ -38,13 +38,13 @@ class Entity implements EntityInterface
      * @param string $countryCode
      * @param string $countryName
      * @param string $recordRaw
-     * 
+     *
      * @return void
      */
     public function __construct($countryCode, $countryName, $recordRaw)
     {
         $this->countryCode = $countryCode;
         $this->countryName = $countryName;
-        $this->recordRaw   = $recordRaw;
+        $this->recordRaw = $recordRaw;
     }
 }
