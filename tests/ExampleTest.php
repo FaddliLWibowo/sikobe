@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Token;
 
-class ExampleTest extends TestCase
+class ExampleTest extends PHPUnit_Framework_TestCase
 {
     /**
      * A basic functional test example.
@@ -13,7 +11,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('SIKOBE');
+        $token = new Token();
+
+        $this->assertTrue($token->id == env('JWT_KEY'));
     }
 }
