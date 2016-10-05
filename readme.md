@@ -1,4 +1,7 @@
 # SIKOBE powered by Laravel PHP Framework
+[![StyleCI](https://styleci.io/repos/69106847/shield?style=flat)](https://styleci.io/repos/7548986)
+[![Build Status](https://travis-ci.org/feelinc/sikobe.svg)](https://travis-ci.org/feelinc/sikobe)
+
 ***Sistem Informasi Korban Bencana***
 
 Aplikasi web ini awalnya di bangun untuk membantu para relawan memberikan informasi mengenai situasi dari semua area yang terdampak bencana banjir di ***Garut***, sehingga publik dapat memantau perkembangannya dan dapat menyalurkan bantuan ke area yang membutuhkan.
