@@ -10,7 +10,6 @@ namespace App\Modules\Collection;
  */
 
 use RuntimeException;
-use App\Modules\Collection\RecordNotFoundException;
 
 class CollectionRepository implements Repository
 {
@@ -24,7 +23,7 @@ class CollectionRepository implements Repository
     /**
      * Current total query rows.
      *
-     * @var integer
+     * @var int
      */
     protected $total = 0;
 
@@ -32,7 +31,7 @@ class CollectionRepository implements Repository
      * Create a new instance.
      *
      * @param string $model
-     * 
+     *
      * @return void
      */
     public function __construct($model)
@@ -43,12 +42,12 @@ class CollectionRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'author_id'  => '', 
-            'identifier' => '', 
-            'search'     => ''
+            'author_id'  => '',
+            'identifier' => '',
+            'search'     => '',
         ], $params);
 
         $model = $this->createModel();
@@ -63,7 +62,7 @@ class CollectionRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['author_id'])
+        if (! empty($params['author_id'])
          || ! empty($params['identifier'])
          || ! empty($params['search'])) {
             $useWhere = true;
@@ -73,7 +72,7 @@ class CollectionRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -83,7 +82,7 @@ class CollectionRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -93,7 +92,7 @@ class CollectionRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['search'])) {
+        if (! empty($params['search'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -116,16 +115,16 @@ class CollectionRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             $query->where($model->getTable().'.author_id', '=', $params['author_id']);
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             $query->where($model->getTable().'.identifier', '=', $params['identifier']);
         }
 
-        if ( ! empty($params['search'])) {
-            $query->where(function($query) use ($model, $params) {
+        if (! empty($params['search'])) {
+            $query->where(function ($query) use ($model, $params) {
                 $query->where($model->getTable().'.title', 'LIKE', '%'.$params['identifier'].'%')
                     ->orWhere($model->getTable().'.description', 'LIKE', '%'.$params['identifier'].'%');
             });
@@ -147,34 +146,34 @@ class CollectionRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function findBy(Array $params)
+    public function findBy(array $params)
     {
         $params = array_merge([
-            'id'          => 0, 
-            'author_id'   => 0, 
-            'identifier'  => ''
+            'id'          => 0,
+            'author_id'   => 0,
+            'identifier'  => '',
         ], $params);
 
         $model = $this->createModel();
 
         $query = $model->newQuery()->select($model->getTable().'.*');
 
-        if ( ! empty($params['id'])) {
+        if (! empty($params['id'])) {
             $query->where($model->getTable().'.id', '=', $params['id']);
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             $query->where($model->getTable().'.author_id', '=', $params['author_id']);
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             $query->where($model->getTable().'.identifier', '=', $params['identifier']);
         }
 
         unset($model);
 
         $item = $query->first();
-        
+
         if (is_null($item)) {
             throw new RecordNotFoundException('Item not found!');
         }
@@ -189,7 +188,7 @@ class CollectionRepository implements Repository
     {
         $item = $this->createModel()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -199,12 +198,12 @@ class CollectionRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function create(Array $data)
+    public function create(array $data)
     {
         $item = $this->createModel();
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to create the item');
         }
 

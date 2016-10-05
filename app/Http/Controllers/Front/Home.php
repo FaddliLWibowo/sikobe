@@ -10,7 +10,6 @@ namespace App\Http\Controllers\Front;
  */
 
 use App\Support\Asset;
-
 use App\Services\Territory as TerritoryService;
 use App\Services\Area as AreaService;
 
@@ -19,14 +18,14 @@ class Home extends Controller
     /**
      * Current province ID.
      *
-     * @var integer
+     * @var int
      */
     protected $provinceId = 32;
 
     /**
      * Current regency ID.
      *
-     * @var integer
+     * @var int
      */
     protected $regencyId = 3205;
 
@@ -46,10 +45,10 @@ class Home extends Controller
         $model = $this->getAreaService()->getEmptyModel();
 
         list($villages) = $this->getTerritoryService()->searchVillages([
-            'area_table'  => $model->getTable(), 
-            'province_id' => $this->provinceId, 
-            'regency_id'  => $this->regencyId, 
-            'order_by'    => 'name'
+            'area_table'  => $model->getTable(),
+            'province_id' => $this->provinceId,
+            'regency_id'  => $this->regencyId,
+            'order_by'    => 'name',
         ], 1, 0);
 
         $locale = 'en';
@@ -57,29 +56,29 @@ class Home extends Controller
         // Parse default messages
         $params = [
             'runtime' => [
-                'initialNow'       => time(), 
-                'availableLocales' => ['en'], 
-                'baseUrl'          => url('/'), 
+                'initialNow'       => time(),
+                'availableLocales' => ['en'],
+                'baseUrl'          => url('/'),
                 'territory'        => [
-                    'villages' => $villages->all()
-                ]
-            ], 
+                    'villages' => $villages->all(),
+                ],
+            ],
             'intl' => [
-                'initialNow' => time(), 
-                'locale'     => $locale, 
-                'newLocale'  => null, 
+                'initialNow' => time(),
+                'locale'     => $locale,
+                'newLocale'  => null,
                 'messages'   => [
                     $locale => [
-                        'dummy' => 'dumb'
-                    ]
-                ]
-            ]
+                        'dummy' => 'dumb',
+                    ],
+                ],
+            ],
         ];
 
         $params = json_encode($params);
-        
+
         return view('home', [
-            'params' => $params
+            'params' => $params,
         ]);
     }
 

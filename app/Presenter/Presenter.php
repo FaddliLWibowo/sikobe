@@ -13,7 +13,6 @@ use ArrayAccess;
 
 abstract class Presenter implements ArrayAccess
 {
-
     /**
      * The object injected on Presenter construction.
      *
@@ -42,7 +41,7 @@ abstract class Presenter implements ArrayAccess
      * @param mixed $object
      * @param array $fields
      */
-    public function __construct($object, Array $fields = ['*'])
+    public function __construct($object, array $fields = ['*'])
     {
         $this->object = $object;
 
@@ -114,11 +113,13 @@ abstract class Presenter implements ArrayAccess
     public function offsetExists($offset)
     {
         // We only check isset on the array, if it is an object we return true as the object could be overloaded
-        if (! is_array($this->object)) { return true; 
+        if (! is_array($this->object)) {
+            return true;
         }
 
         if ($method = $this->getPresenterMethodFromVariable($offset)) {
             $result = $this->$method();
+
             return isset($result);
         }
 
@@ -147,6 +148,7 @@ abstract class Presenter implements ArrayAccess
     {
         if (is_array($this->object)) {
             $this->object[$offset] = $value;
+
             return;
         }
 
@@ -163,6 +165,7 @@ abstract class Presenter implements ArrayAccess
     {
         if (is_array($this->object)) {
             unset($this->object[$offset]);
+
             return;
         }
 
@@ -194,7 +197,7 @@ abstract class Presenter implements ArrayAccess
     public function __call($method, $arguments)
     {
         if (is_object($this->object)) {
-            $value = call_user_func_array(array($this->object, $method), $arguments);
+            $value = call_user_func_array([$this->object, $method], $arguments);
 
             return $this->__getDecorator()->decorate($value);
         }
@@ -203,15 +206,16 @@ abstract class Presenter implements ArrayAccess
     }
 
     /**
-     * Allow ability to run isset() on a variable
+     * Allow ability to run isset() on a variable.
      *
      * @param  string $name
-     * @return boolean
+     * @return bool
      */
     public function __isset($name)
     {
         if ($method = $this->getPresenterMethodFromVariable($name)) {
             $result = $this->$method();
+
             return isset($result);
         }
 
@@ -223,7 +227,7 @@ abstract class Presenter implements ArrayAccess
     }
 
     /**
-     * Allow to unset a variable through the presenter
+     * Allow to unset a variable through the presenter.
      *
      * @param string $name
      */
@@ -231,6 +235,7 @@ abstract class Presenter implements ArrayAccess
     {
         if (is_array($this->object)) {
             unset($this->object[$name]);
+
             return;
         }
 
@@ -287,5 +292,4 @@ abstract class Presenter implements ArrayAccess
             return $method;
         }
     }
-  
 }

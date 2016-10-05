@@ -10,13 +10,10 @@ namespace App;
  */
 
 use DB;
-
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 use App\Presenter\User as UserPresenter;
 use App\Contracts\Presentable;
-
 use App\Modules\User\Models\User as UserContract;
 
 class User extends Authenticatable implements UserContract, Presentable
@@ -29,7 +26,7 @@ class User extends Authenticatable implements UserContract, Presentable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'first_name', 'last_name'
+        'name', 'email', 'password', 'first_name', 'last_name',
     ];
 
     /**
@@ -44,14 +41,14 @@ class User extends Authenticatable implements UserContract, Presentable
     /**
      * Is the super admin.
      *
-     * @var boolean
+     * @var bool
      */
     protected $_isSuperAdmin;
 
     /**
      * Is the relawan.
      *
-     * @var boolean
+     * @var bool
      */
     protected $_isRelawan;
 
@@ -62,7 +59,7 @@ class User extends Authenticatable implements UserContract, Presentable
     {
         $metas = $this->metas;
 
-        if ( ! $metas->isEmpty()) {
+        if (! $metas->isEmpty()) {
             foreach ($metas as $meta) {
                 $meta->delete();
             }
@@ -70,7 +67,7 @@ class User extends Authenticatable implements UserContract, Presentable
 
         $groupIds = $this->groupIds;
 
-        if ( ! $groupIds->isEmpty()) {
+        if (! $groupIds->isEmpty()) {
             foreach ($groupIds as $groupId) {
                 DB::table($groupId->getTable())
                     ->where('user_id', '=', $groupId->user_id)
@@ -128,8 +125,8 @@ class User extends Authenticatable implements UserContract, Presentable
     public function groups()
     {
         return $this->hasManyThrough(
-            '\App\Modules\User\Models\Eloquent\Group', 
-            '\App\Modules\User\Models\Eloquent\UserGroup', 
+            '\App\Modules\User\Models\Eloquent\Group',
+            '\App\Modules\User\Models\Eloquent\UserGroup',
             'user_id', 'id'
         );
     }
@@ -147,14 +144,14 @@ class User extends Authenticatable implements UserContract, Presentable
      *
      * @param  string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function isInGroup($name)
     {
         $groups = $this->groups;
-        
-        if ( ! is_null($groups)) {
-            if ( ! $groups->isEmpty()) {
+
+        if (! is_null($groups)) {
+            if (! $groups->isEmpty()) {
                 $result = $groups->search(function ($item) use ($name) {
                     return $item->name == $name;
                 });

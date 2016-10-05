@@ -10,12 +10,10 @@ namespace App\Modules\User\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\User\Models\UserGroup as UserGroupInterface;
 
 class UserGroup extends Model implements UserGroupInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -40,8 +38,7 @@ class UserGroup extends Model implements UserGroupInterface
      * {@inheritdoc}
      */
     protected $fillable = [
-        'user_id', 
-        'group_id'
+        'user_id',
+        'group_id',
     ];
-
 }

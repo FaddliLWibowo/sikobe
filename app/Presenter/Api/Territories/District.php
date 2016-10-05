@@ -10,13 +10,12 @@ namespace App\Presenter\Api\Territories;
  */
 
 use League\Fractal\TransformerAbstract;
-
 use App\Modules\Territory\Models\District as DistrictContract;
 
 class District extends TransformerAbstract
 {
     /**
-     * Turn this item object into a generic array
+     * Turn this item object into a generic array.
      *
      * @param  DistrictContract $item
      *
@@ -25,9 +24,8 @@ class District extends TransformerAbstract
     public function transform(DistrictContract $item)
     {
         return [
-            'id'    => $item->id, 
-            'title' => $item->name
+            'id'    => $item->id,
+            'title' => $item->name,
         ];
     }
-
 }

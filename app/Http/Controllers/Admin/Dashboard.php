@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Support\Asset;
-
 class Dashboard extends Controller
 {
     /**

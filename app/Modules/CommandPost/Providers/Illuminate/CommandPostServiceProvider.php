@@ -10,7 +10,6 @@ namespace App\Modules\CommandPost\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\CommandPost\Repository;
 use App\Modules\CommandPost\CommandPostRepository;
 
@@ -34,7 +33,7 @@ class CommandPostServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Repository::class, function() {
+        $this->app->singleton(Repository::class, function () {
             return new CommandPostRepository(
                 \App\Posko::class
             );

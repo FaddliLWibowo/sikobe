@@ -11,9 +11,7 @@ namespace App\Services\Validators;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
-
 use App\Modules\User\Repository;
-
 use App\Modules\User\RecordNotFoundException;
 
 class User
@@ -31,11 +29,11 @@ class User
      * @var array
      */
     protected $validationRules = [
-        'email'     => 'required|email|value_unique', 
-        'name'      => 'required', 
-        'phone'     => 'required', 
-        'activated' => 'required', 
-        'is_admin'  => 'required'
+        'email'     => 'required|email|value_unique',
+        'name'      => 'required',
+        'phone'     => 'required',
+        'activated' => 'required',
+        'is_admin'  => 'required',
     ];
 
     /**
@@ -44,9 +42,9 @@ class User
      * @var array
      */
     protected $profileValidationRules = [
-        'email' => 'required|email|value_unique', 
-        'name'  => 'required', 
-        'phone' => 'required'
+        'email' => 'required|email|value_unique',
+        'name'  => 'required',
+        'phone' => 'required',
     ];
 
     /**
@@ -55,8 +53,8 @@ class User
      * @var array
      */
     protected $passwordValidationRules = [
-        'current_password' => 'required|min:6|current_paswd', 
-        'password'         => 'required|confirmed|min:6'
+        'current_password' => 'required|min:6|current_paswd',
+        'password'         => 'required|confirmed|min:6',
     ];
 
     /**
@@ -73,9 +71,9 @@ class User
     /**
      * Validate data.
      *
-     * @param  integer  $userId
-     * 
-     * @return boolean|\Illuminate\Validation\Validator
+     * @param  int  $userId
+     *
+     * @return bool|\Illuminate\Validation\Validator
      */
     public function isValid($userId = 0)
     {
@@ -86,10 +84,10 @@ class User
             'value_unique', function ($attribute, $value) use ($repository, $userId) {
                 try {
                     $user = $repository->findBy([
-                        'email' => $value
+                        'email' => $value,
                     ]);
 
-                    if ( ! empty($userId)) {
+                    if (! empty($userId)) {
                         return $user->id == $userId;
                     }
 
@@ -107,7 +105,7 @@ class User
             $isPasswordRequired = true;
         } else {
             $password = $this->request->get('password');
-            if ( ! empty($password)) {
+            if (! empty($password)) {
                 $isPasswordRequired = true;
             }
         }
@@ -118,7 +116,7 @@ class User
 
         // Do validation
         $validator = $this->getValidationFactory()->make(
-            $this->request->all(), 
+            $this->request->all(),
             $validationRules
         );
 
@@ -132,9 +130,9 @@ class User
     /**
      * Validate profile data.
      *
-     * @param  integer  $userId
-     * 
-     * @return boolean|\Illuminate\Validation\Validator
+     * @param  int  $userId
+     *
+     * @return bool|\Illuminate\Validation\Validator
      */
     public function isValidProfile($userId)
     {
@@ -145,10 +143,10 @@ class User
             'value_unique', function ($attribute, $value) use ($repository, $userId) {
                 try {
                     $user = $repository->findBy([
-                        'email' => $value
+                        'email' => $value,
                     ]);
 
-                    if ( ! empty($userId)) {
+                    if (! empty($userId)) {
                         return $user->id == $userId;
                     }
 
@@ -161,7 +159,7 @@ class User
 
         // Do validation
         $validator = $this->getValidationFactory()->make(
-            $this->request->all(), 
+            $this->request->all(),
             $this->profileValidationRules
         );
 
@@ -176,27 +174,27 @@ class User
      * Validate password data.
      *
      * @param  string  $email
-     * 
-     * @return boolean|\Illuminate\Validation\Validator
+     *
+     * @return bool|\Illuminate\Validation\Validator
      */
     public function isValidPassword($email)
     {
         $guard = $this->getGuard();
-        
+
         // Validate that current password is match
         $this->getValidationFactory()->extend(
-            'current_paswd', 
-            function($attribute, $value) use ($guard, $email) {
+            'current_paswd',
+            function ($attribute, $value) use ($guard, $email) {
                 return $guard->validate([
-                    'email'    => $email, 
-                    'password' => $value
+                    'email'    => $email,
+                    'password' => $value,
                 ]);
             }
         );
 
         // Do validation
         $validator = $this->getValidationFactory()->make(
-            $this->request->all(), 
+            $this->request->all(),
             $this->passwordValidationRules
         );
 

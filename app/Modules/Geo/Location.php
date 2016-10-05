@@ -11,7 +11,6 @@ namespace App\Modules\Geo;
 
 use App\Modules\Geo\Vendors\MaxMind;
 
-use App\Modules\Geo\RecordNotFoundException;
 
 class Location
 {
@@ -41,13 +40,13 @@ class Location
      *
      * @param string $driver
      * @param array  $props
-     * 
+     *
      * @return void
      */
     public function __construct($driver, $props)
     {
         $this->driver = $driver;
-        $this->props  = $props;
+        $this->props = $props;
     }
 
     /**
@@ -73,12 +72,12 @@ class Location
     {
         try {
             list(
-                $countryCode, 
-                $countryName, 
+                $countryCode,
+                $countryName,
                 $recordRaw
             ) = $this->getVendor()->locateByIP($_SERVER['REMOTE_ADDR']);
         } catch (RecordNotFoundException $e) {
-            return null;
+            return;
         }
 
         return new Entity($countryCode, $countryName, $recordRaw);

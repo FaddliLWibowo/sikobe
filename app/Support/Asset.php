@@ -13,9 +13,9 @@ class Asset
 {
     // This constant indicates where to add a asset;
     const ADD_TO_NONE = 0;
-    const ADD_TO_CSS  = 1;
+    const ADD_TO_CSS = 1;
     const ADD_TO_LESS = 2;
-    const ADD_TO_JS   = 3;
+    const ADD_TO_JS = 3;
     const ADD_TO_POLYMER = 4;
 
     /*
@@ -23,14 +23,14 @@ class Asset
      * is unknown this constant indicate what to do:
      */
     const ON_UNKNOWN_EXTENSION_NONE = 0;
-    const ON_UNKNOWN_EXTENSION_CSS  = 1;
+    const ON_UNKNOWN_EXTENSION_CSS = 1;
     const ON_UNKNOWN_EXTENSION_LESS = 2;
-    const ON_UNKNOWN_EXTENSION_JS   = 3;
+    const ON_UNKNOWN_EXTENSION_JS = 3;
 
     private static $ON_UNKNOWN_EXTENSION_TO_ADD_TO = [
-        Asset::ON_UNKNOWN_EXTENSION_NONE => Asset::ADD_TO_CSS,
-        Asset::ON_UNKNOWN_EXTENSION_LESS => Asset::ADD_TO_LESS,
-        Asset::ON_UNKNOWN_EXTENSION_JS   => Asset::ADD_TO_JS
+        self::ON_UNKNOWN_EXTENSION_NONE => self::ADD_TO_CSS,
+        self::ON_UNKNOWN_EXTENSION_LESS => self::ADD_TO_LESS,
+        self::ON_UNKNOWN_EXTENSION_JS   => self::ADD_TO_JS,
     ];
 
     public static $css = [];
@@ -49,13 +49,13 @@ class Asset
     public static $secure = false;
     protected static $cacheBusterGeneratorFunction = null;
     private static $useShortHandReady = false;
-    private static $onUnknownExtensionDefault = Asset::ON_UNKNOWN_EXTENSION_NONE;
+    private static $onUnknownExtensionDefault = self::ON_UNKNOWN_EXTENSION_NONE;
 
     /**
-     * Check environment
+     * Check environment.
      *
      * @return void
-    */
+     */
     public static function checkEnv()
     {
         if (static::$environment == null) {
@@ -68,14 +68,13 @@ class Asset
         }
     }
 
-
     /**
-     * Set domain name
+     * Set domain name.
      *
      * @param string $url
      *
      * @return void
-    */
+     */
     public static function setDomain($url)
     {
         if (is_string($url)) {
@@ -83,27 +82,25 @@ class Asset
         }
     }
 
-
     /**
-     * Set prefix
+     * Set prefix.
      *
      * @param string $prefix
      *
      * @return void
-    */
+     */
     public static function setPrefix($prefix)
     {
         static::$prefix = $prefix;
     }
 
-
     /**
-     * Set cache buster JSON file
+     * Set cache buster JSON file.
      *
      * @param string $cachebuster
      *
      * @return void
-    */
+     */
     public static function setCachebuster($cachebuster)
     {
         if (file_exists($cachebuster)) {
@@ -111,61 +108,58 @@ class Asset
         }
     }
 
-
     /**
-     * Set cache buster function
+     * Set cache buster function.
      *
-     * @param Callable $fn
+     * @param callable $fn
      *
      * Callable must accepts ONE argument {String} (filename)
      * and return a {String} (hash without filename and "?")
      *
      * @return void
-    */
+     */
     public static function setCacheBusterGeneratorFunction($fn)
     {
         static::$cacheBusterGeneratorFunction = $fn;
     }
 
-
     /**
-     * Generate cache buster filename
+     * Generate cache buster filename.
      *
      * @param string $a
      * @param string $name
      *
      * @return void
-    */
+     */
     private static function generateCacheBusterFilename($a)
     {
         $hash = '';
-        if(!is_callable(static::$cacheBusterGeneratorFunction)) {
-            if(is_array(static::$hash) && array_key_exists($a, static::$hash)) {
+        if (! is_callable(static::$cacheBusterGeneratorFunction)) {
+            if (is_array(static::$hash) && array_key_exists($a, static::$hash)) {
                 $hash .= static::$hash[$a];
             }
         } else {
-            $hash = call_user_func_array(static::$cacheBusterGeneratorFunction, array($a));
+            $hash = call_user_func_array(static::$cacheBusterGeneratorFunction, [$a]);
         }
 
-        if(is_string($hash) && $hash !== '') {
-            $a .= '?' . $hash;
+        if (is_string($hash) && $hash !== '') {
+            $a .= '?'.$hash;
         }
+
         return $a;
     }
 
-
     /**
-     * Set indicator if use Short Hand [jQuery()] or Normal jQuery( document ).ready()
+     * Set indicator if use Short Hand [jQuery()] or Normal jQuery( document ).ready().
      *
-     * @param boolean $useShortHandReady
+     * @param bool $useShortHandReady
      *
      * @return void
-    */
+     */
     public static function setUseShortHandReady($useShortHandReady)
     {
         static::$useShortHandReady = $useShortHandReady;
     }
-
 
     /**
      * Indicate what to do by default if an unknown extension is found.
@@ -174,10 +168,10 @@ class Asset
      *             static::ON_UNKNOWN_EXTENSION_JS) $onUnknownExtensionDefault
      *
      * @return void
-    */
+     */
     public static function setOnUnknownExtensionDefault($onUnknownExtensionDefault)
     {
-        if ((!is_int($onUnknownExtensionDefault))
+        if ((! is_int($onUnknownExtensionDefault))
             || ($onUnknownExtensionDefault < static::ON_UNKNOWN_EXTENSION_NONE)
             || ($onUnknownExtensionDefault > static::ON_UNKNOWN_EXTENSION_JS)) {
             $onUnknownExtensionDefault = static::ON_UNKNOWN_EXTENSION_NONE;
@@ -186,9 +180,8 @@ class Asset
         static::$onUnknownExtensionDefault = $onUnknownExtensionDefault;
     }
 
-
     /**
-     * Add new asset
+     * Add new asset.
      *
      * @param string $a
      * @param string $name
@@ -196,7 +189,7 @@ class Asset
      *             static::ON_UNKNOWN_EXTENSION_JS) $onUnknownExtension
      *
      * @return void
-    */
+     */
     public static function add($a, $name = 'footer', $onUnknownExtension = false)
     {
         if (is_array($a)) {
@@ -208,16 +201,15 @@ class Asset
         }
     }
 
-
     /**
-     * Identify where to add an asset:
+     * Identify where to add an asset:.
      *
      * @param string $a
      * @param int (static::ON_UNKNOWN_EXTENSION_NONE,
      *             static::ON_UNKNOWN_EXTENSION_JS)/boolean $onUnknownExtension
      *
      * @return int (static::ADD_TO_NONE, static::ADD_TO_JS)
-    */
+     */
     private static function getAddTo($a, $onUnknownExtension = false)
     {
         if (false === $onUnknownExtension) {
@@ -230,31 +222,27 @@ class Asset
         } elseif (preg_match("/\.less/i", $a)) {
             // less
             return static::ADD_TO_LESS;
-
         } elseif (preg_match("/\.js|\/js/i", $a)) {
             // js
             return static::ADD_TO_JS;
-
         } elseif (preg_match("/\.html|\/html/i", $a)) {
             // js
             return static::ADD_TO_POLYMER;
-
-        } elseif ( (static::ON_UNKNOWN_EXTENSION_NONE != $onUnknownExtension) && isset(static::$ON_UNKNOWN_EXTENSION_TO_ADD_TO[$onUnknownExtension]) ) {
+        } elseif ((static::ON_UNKNOWN_EXTENSION_NONE != $onUnknownExtension) && isset(static::$ON_UNKNOWN_EXTENSION_TO_ADD_TO[$onUnknownExtension])) {
             return static::$ON_UNKNOWN_EXTENSION_TO_ADD_TO[$onUnknownExtension];
         }
 
         return static::ADD_TO_NONE;
     }
 
-
     /**
-     * Process add method
+     * Process add method.
      *
      * @param string $a
      * @param string $name
      *
      * @return void
-    */
+     */
     protected static function processAdd($a, $name, $onUnknownExtension = false)
     {
         switch (static::getAddTo($a, $onUnknownExtension)) {
@@ -280,15 +268,14 @@ class Asset
         }
     }
 
-
     /**
-     * Add new asset as first in its array
+     * Add new asset as first in its array.
      *
      * @param string $a
      * @param string $name
      *
      * @return void
-    */
+     */
     public static function addFirst($a, $name = 'footer', $onUnknownExtension = false)
     {
         switch (static::getAddTo($a, $onUnknownExtension)) {
@@ -304,7 +291,7 @@ class Asset
 
             case static::ADD_TO_JS:
 
-                if (!empty(static::$js[$name])) {
+                if (! empty(static::$js[$name])) {
                     array_unshift(static::$js[$name], $a);
                 } else {
                     static::$js[$name][] = $a;
@@ -320,16 +307,15 @@ class Asset
         }
     }
 
-
     /**
-     * Add new asset before another asset in its array
+     * Add new asset before another asset in its array.
      *
      * @param string $a
      * @param string $b
      * @param string $name
      *
      * @return void
-    */
+     */
     public static function addBefore($a, $b, $name = 'footer', $onUnknownExtension = false)
     {
         switch (static::getAddTo($a, $onUnknownExtension)) {
@@ -369,7 +355,7 @@ class Asset
 
             case static::ADD_TO_JS:
 
-                if (!empty(static::$js[$name])) {
+                if (! empty(static::$js[$name])) {
                     $bpos = array_search($b, static::$js[$name]);
 
                     if ($bpos === 0) {
@@ -405,16 +391,15 @@ class Asset
         }
     }
 
-
     /**
-     * Add new asset after another asset in its array
+     * Add new asset after another asset in its array.
      *
      * @param string $a
      * @param string $b
      * @param string $name
      *
      * @return void
-    */
+     */
     public static function addAfter($a, $b, $name = 'footer', $onUnknownExtension = false)
     {
         switch (static::getAddTo($a, $onUnknownExtension)) {
@@ -423,8 +408,8 @@ class Asset
                 $bpos = array_search($b, static::$css);
 
                 if ($bpos === 0 || $bpos > 0) {
-                    $barr = array_slice(static::$css, $bpos+1);
-                    $aarr = array_slice(static::$css, 0, $bpos+1);
+                    $barr = array_slice(static::$css, $bpos + 1);
+                    $aarr = array_slice(static::$css, 0, $bpos + 1);
                     array_push($aarr, $a);
                     static::$css = array_merge($aarr, $barr);
                 } else {
@@ -438,8 +423,8 @@ class Asset
                 $bpos = array_search($b, static::$less);
 
                 if ($bpos === 0 || $bpos > 0) {
-                    $barr = array_slice(static::$less, $bpos+1);
-                    $aarr = array_slice(static::$less, 0, $bpos+1);
+                    $barr = array_slice(static::$less, $bpos + 1);
+                    $aarr = array_slice(static::$less, 0, $bpos + 1);
                     array_push($aarr, $a);
                     static::$less = array_merge($aarr, $barr);
                 } else {
@@ -450,12 +435,12 @@ class Asset
 
             case static::ADD_TO_JS:
 
-                if (!empty(static::$js[$name])) {
+                if (! empty(static::$js[$name])) {
                     $bpos = array_search($b, static::$js[$name]);
 
                     if ($bpos === 0 || $bpos > 0) {
-                        $barr = array_slice(static::$js[$name], $bpos+1);
-                        $aarr = array_slice(static::$js[$name], 0, $bpos+1);
+                        $barr = array_slice(static::$js[$name], $bpos + 1);
+                        $aarr = array_slice(static::$js[$name], 0, $bpos + 1);
                         array_push($aarr, $a);
                         static::$js[$name] = array_merge($aarr, $barr);
                     } else {
@@ -470,8 +455,8 @@ class Asset
                 $bpos = array_search($b, static::$polymer);
 
                 if ($bpos === 0 || $bpos > 0) {
-                    $barr = array_slice(static::$polymer, $bpos+1);
-                    $aarr = array_slice(static::$polymer, 0, $bpos+1);
+                    $barr = array_slice(static::$polymer, $bpos + 1);
+                    $aarr = array_slice(static::$polymer, 0, $bpos + 1);
                     array_push($aarr, $a);
                     static::$polymer = array_merge($aarr, $barr);
                 } else {
@@ -482,34 +467,31 @@ class Asset
         }
     }
 
-
     /**
-     * Add new script
+     * Add new script.
      *
      * @param string $s
      * @param string $name
      *
      * @return void
-    */
+     */
     public static function addScript($s, $name = 'footer')
     {
         static::$scripts[$name][] = $s;
     }
 
-
     /**
-     * Add new style
+     * Add new style.
      *
      * @param string $style
      * @param string $s
      *
      * @return void
-    */
+     */
     public static function addStyle($style, $s = 'header')
     {
         static::$styles[$s][] = $style;
     }
-
 
     /**
      * Returns the full-path for an asset.
@@ -529,24 +511,23 @@ class Asset
             return asset($file, static::$secure);
         }
 
-        return rtrim(static::$domain, '/') .'/' . ltrim($file, '/');
+        return rtrim(static::$domain, '/').'/'.ltrim($file, '/');
     }
 
-
     /**
-     * Loads all items from $css array not wrapped in <link> tags
+     * Loads all items from $css array not wrapped in <link> tags.
      *
      * @param string $separator
      *
      * @return void
-    */
-    public static function cssRaw($separator = "")
+     */
+    public static function cssRaw($separator = '')
     {
         static::checkEnv();
 
-        if (!empty(static::$css)) {
-            foreach(static::$css as $file) {
-                if ( ! in_array($file, static::$loadedCss)) {
+        if (! empty(static::$css)) {
+            foreach (static::$css as $file) {
+                if (! in_array($file, static::$loadedCss)) {
                     echo static::$prefix, static::url($file), $separator;
 
                     static::$loadedCss[] = $file;
@@ -555,19 +536,18 @@ class Asset
         }
     }
 
-
     /**
-     * Loads all items from $css array
+     * Loads all items from $css array.
      *
      * @return void
-    */
+     */
     public static function css()
     {
         static::checkEnv();
 
-        if (!empty(static::$css)) {
-            foreach(static::$css as $file) {
-                if ( ! in_array($file, static::$loadedCss)) {
+        if (! empty(static::$css)) {
+            foreach (static::$css as $file) {
+                if (! in_array($file, static::$loadedCss)) {
                     echo static::$prefix, '<link rel="stylesheet" type="text/css" href="', static::url($file), "\" />\n";
 
                     static::$loadedCss[] = $file;
@@ -576,65 +556,61 @@ class Asset
         }
     }
 
-
     /**
-     * Loads all items from $less array not wrapped in <link> tags
+     * Loads all items from $less array not wrapped in <link> tags.
      *
      * @param string $separator
      *
      * @return void
-    */
-    public static function lessRaw($separator = "")
+     */
+    public static function lessRaw($separator = '')
     {
         static::checkEnv();
 
-        if (!empty(static::$less)) {
-            foreach(static::$less as $file) {
+        if (! empty(static::$less)) {
+            foreach (static::$less as $file) {
                 echo static::$prefix, static::url($file), $separator;
             }
         }
     }
 
-
     /**
-     * Loads all items from $less array
+     * Loads all items from $less array.
      *
      * @return void
-    */
+     */
     public static function less()
     {
         static::checkEnv();
 
-        if (!empty(static::$less)) {
-            foreach(static::$less as $file) {
+        if (! empty(static::$less)) {
+            foreach (static::$less as $file) {
                 echo static::$prefix, '<link rel="stylesheet/less" type="text/css" href="', static::url($file), "\" />\n";
             }
         }
     }
 
-
     /**
-     * Loads all items from $styles array
+     * Loads all items from $styles array.
      *
      * @param string $name
      *
      * @return void
-    */
+     */
     public static function styles($name = 'header')
     {
-        if (($name !== '') && (!empty(static::$styles[$name]))) {
+        if (($name !== '') && (! empty(static::$styles[$name]))) {
             echo "\n", static::$prefix, "<style type=\"text/css\">\n", static::$prefix;
 
-            foreach(static::$styles[$name] as $style) {
+            foreach (static::$styles[$name] as $style) {
                 echo "$style\n", static::$prefix;
             }
 
             echo static::$prefix, "</style>\n";
-
-        } elseif (!empty(static::$styles)) {
+        } elseif (! empty(static::$styles)) {
             echo static::$prefix, "<style type=\"text/css\">\n";
 
-            foreach(static::$styles as $style) {
+            foreach (static::$styles as $style) {
                 echo "$style\n";
             }
 
@@ -642,22 +618,21 @@ class Asset
         }
     }
 
-
     /**
-     * Loads items from $js array not wrapped in <script> tags
+     * Loads items from $js array not wrapped in <script> tags.
      *
      * @param string $separator
      * @param string $name
      *
      * @return void
-    */
-    public static function jsRaw($separator = "", $name = 'footer')
+     */
+    public static function jsRaw($separator = '', $name = 'footer')
     {
         static::checkEnv();
 
-        if (!empty(static::$js[$name])) {
-            foreach(static::$js[$name] as $file) {
-                if ( ! in_array($file, static::$loadedJs)) {
+        if (! empty(static::$js[$name])) {
+            foreach (static::$js[$name] as $file) {
+                if (! in_array($file, static::$loadedJs)) {
                     echo static::$prefix, static::url($file), $separator;
 
                     static::$loadedJs[] = $file;
@@ -666,16 +641,15 @@ class Asset
         }
     }
 
-
     /**
-     * Loads items from $js array
+     * Loads items from $js array.
      *
      * @param string $name
-     * @param boolean $tags
+     * @param bool $tags
      * @param string $join
      *
      * @return void
-    */
+     */
     public static function js($name = 'footer')
     {
         static::checkEnv();
@@ -684,9 +658,9 @@ class Asset
             $name = 'footer';
         }
 
-        if (!empty(static::$js[$name])) {
-            foreach(static::$js[$name] as $file) {
-                if ( ! in_array($file, static::$loadedJs)) {
+        if (! empty(static::$js[$name])) {
+            foreach (static::$js[$name] as $file) {
+                if (! in_array($file, static::$loadedJs)) {
                     echo static::$prefix, '<script src="', static::url($file), "\"></script>\n";
 
                     static::$loadedJs[] = $file;
@@ -695,29 +669,28 @@ class Asset
         }
     }
 
-
     /**
-     * Loads items from $scripts array
+     * Loads items from $scripts array.
      *
      * @param string $name
      *
      * @return void
-    */
+     */
     public static function scripts($name = 'footer')
     {
         if ($name == 'ready') {
-            if (!empty(static::$scripts['ready'])) {
+            if (! empty(static::$scripts['ready'])) {
                 echo static::$prefix, '<script>', (static::$useShortHandReady ? 'jQuery(' : 'jQuery(document).ready('), "function(){\n";
 
-                foreach(static::$scripts['ready'] as $script) {
+                foreach (static::$scripts['ready'] as $script) {
                     echo "$script\n", static::$prefix;
                 }
 
                 echo "});</script>\n";
             }
         } else {
-            if (!empty(static::$scripts[$name])) {
-                foreach(static::$scripts[$name] as $script) {
+            if (! empty(static::$scripts[$name])) {
+                foreach (static::$scripts[$name] as $script) {
                     echo static::$prefix, "<script>\n$script\n</script>\n";
                 }
             }
@@ -725,17 +698,17 @@ class Asset
     }
 
     /**
-     * Loads all items from $polymer array
+     * Loads all items from $polymer array.
      *
      * @return void
-    */
+     */
     public static function polymer()
     {
         static::checkEnv();
 
-        if (!empty(static::$polymer)) {
-            foreach(static::$polymer as $file) {
-                if ( ! in_array($file, static::$loadedPolymer)) {
+        if (! empty(static::$polymer)) {
+            foreach (static::$polymer as $file) {
+                if (! in_array($file, static::$loadedPolymer)) {
                     echo static::$prefix, '<link rel="import" href="', static::url($file), "\" />\n";
 
                     static::$loadedPolymer[] = $file;
@@ -743,5 +716,4 @@ class Asset
             }
         }
     }
-    
 }

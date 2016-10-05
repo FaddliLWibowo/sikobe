@@ -11,12 +11,8 @@ namespace App\Services;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
-use App\Services\Service;
 use App\Services\Validators\Collection as CollectionValidator;
-
 use App\Modules\Collection\Repository;
-
 use RuntimeException;
 
 class Collection extends Service
@@ -25,22 +21,22 @@ class Collection extends Service
      * Search black list items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
+     * @param  int $page
+     * @param  int $limit
      *
      * @return array
      * @throws \RuntimeException
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $repository = $this->getCollectionRepository();
         $collection = $repository->search($params, $page, $limit);
 
         return new LengthAwarePaginator(
-            $collection->all(), 
-            $repository->getTotal(), 
-            $limit, 
-            $page, 
+            $collection->all(),
+            $repository->getTotal(),
+            $limit,
+            $page,
             ['path' => Paginator::resolveCurrentPath()]
         );
     }
@@ -48,9 +44,9 @@ class Collection extends Service
     /**
      * Delete a collection item.
      *
-     * @param  integer $id
+     * @param  int $id
      *
-     * @return boolean
+     * @return bool
      * @throws \App\Modules\Collection\RecordNotFoundException
      * @throws \RuntimeException
      */
@@ -70,28 +66,27 @@ class Collection extends Service
      */
     public function informasiUpdate($id)
     {
-      $validator = $this->getValidator();
+        $validator = $this->getValidator();
 
-      $request = $this->getRequest();
+        $request = $this->getRequest();
 
-      $collectionRepository = $this->getCollectionRepository();
+        $collectionRepository = $this->getCollectionRepository();
 
-      $item = $collectionRepository->findBy(['id' => $id]);
+        $item = $collectionRepository->findBy(['id' => $id]);
 
-      $data = [
+        $data = [
           'author_id'      => $request->get('author_id'),
           'identifier'  => $request->get('identifier'),
-          'description' => $request->get('description')
+          'description' => $request->get('description'),
       ];
 
-      $item->fill($data);
+        $item->fill($data);
 
-      if ( ! $item->save()) {
-          throw new RuntimeException('Failed to update information');
-      }
+        if (! $item->save()) {
+            throw new RuntimeException('Failed to update information');
+        }
 
-      return $item;
-
+        return $item;
     }
 
     /**
@@ -117,7 +112,7 @@ class Collection extends Service
             'author_id'   => $request->get('author_id'),
             'identifier'  => $identifier,
             'title'       => $request->get('title'),
-            'description' => $request->get('description')
+            'description' => $request->get('description'),
         ]);
     }
 

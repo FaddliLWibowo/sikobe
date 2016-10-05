@@ -10,9 +10,7 @@ namespace App\Modules\Area\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\Area\Models\Area as AreaInterface;
-
 use App\Presenter\Area\Area as AreaPresenter;
 use App\Contracts\Presentable;
 
@@ -29,18 +27,18 @@ class Area extends Model implements AreaInterface, Presentable
      * {@inheritdoc}
      */
     protected $fillable = [
-        'identifier',   
-        'author_id', 
-        'title', 
-        'description', 
-        'address', 
-        'province_id', 
-        'regency_id', 
-        'district_id', 
-        'village_id', 
-        'latitude', 
-        'longitude', 
-        'status'
+        'identifier',
+        'author_id',
+        'title',
+        'description',
+        'address',
+        'province_id',
+        'regency_id',
+        'district_id',
+        'village_id',
+        'latitude',
+        'longitude',
+        'status',
     ];
 
     /**

@@ -10,7 +10,6 @@ namespace App\Modules\Message\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\Message\Repository;
 use App\Modules\Message\MessageRepository;
 
@@ -34,7 +33,7 @@ class MessageServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Repository::class, function() {
+        $this->app->singleton(Repository::class, function () {
             return new MessageRepository(
                 \App\Modules\Message\Models\Eloquent\Message::class
             );

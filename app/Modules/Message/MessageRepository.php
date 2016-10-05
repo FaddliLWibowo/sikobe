@@ -10,7 +10,6 @@ namespace App\Modules\Message;
  */
 
 use RuntimeException;
-use App\Modules\Message\RecordNotFoundException;
 
 class MessageRepository implements Repository
 {
@@ -24,7 +23,7 @@ class MessageRepository implements Repository
     /**
      * Current total query rows.
      *
-     * @var integer
+     * @var int
      */
     protected $total = 0;
 
@@ -32,7 +31,7 @@ class MessageRepository implements Repository
      * Create a new instance.
      *
      * @param string $model
-     * 
+     *
      * @return void
      */
     public function __construct($model)
@@ -43,10 +42,10 @@ class MessageRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'search' => ''
+            'search' => '',
         ], $params);
 
         $model = $this->createModel();
@@ -69,7 +68,7 @@ class MessageRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['search'])) {
+        if (! empty($params['search'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -94,8 +93,8 @@ class MessageRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['search'])) {
-            $query->where(function($query) use ($model, $params) {
+        if (! empty($params['search'])) {
+            $query->where(function ($query) use ($model, $params) {
                 $query->where($model->getTable().'.title', 'LIKE', '%'.$params['search'].'%')
                     ->orWhere($model->getTable().'.sender', 'LIKE', '%'.$params['search'].'%')
                     ->orWhere($model->getTable().'.phone', 'LIKE', '%'.$params['search'].'%')
@@ -123,7 +122,7 @@ class MessageRepository implements Repository
     {
         $item = $this->createModel()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -133,12 +132,12 @@ class MessageRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function create(Array $data)
+    public function create(array $data)
     {
         $item = $this->createModel();
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to create the item');
         }
 

@@ -10,7 +10,6 @@ namespace App\Modules\CommandPost;
  */
 
 use RuntimeException;
-use App\Modules\CommandPost\RecordNotFoundException;
 
 class CommandPostRepository implements Repository
 {
@@ -24,7 +23,7 @@ class CommandPostRepository implements Repository
     /**
      * Current total query rows.
      *
-     * @var integer
+     * @var int
      */
     protected $total = 0;
 
@@ -32,7 +31,7 @@ class CommandPostRepository implements Repository
      * Create a new instance.
      *
      * @param string $model
-     * 
+     *
      * @return void
      */
     public function __construct($model)
@@ -43,15 +42,15 @@ class CommandPostRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'author_id'   => '', 
-            'area_id'     => '', 
-            'identifier'  => '', 
-            'village_id'  => '', 
-            'title'       => '', 
-            'is_active'   => -1
+            'author_id'   => '',
+            'area_id'     => '',
+            'identifier'  => '',
+            'village_id'  => '',
+            'title'       => '',
+            'is_active'   => -1,
         ], $params);
 
         $model = $this->createModel();
@@ -66,7 +65,7 @@ class CommandPostRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['author_id'])
+        if (! empty($params['author_id'])
          || ! empty($params['area_id'])
          || ! empty($params['identifier'])
          || ! empty($params['village_id'])
@@ -79,7 +78,7 @@ class CommandPostRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -89,7 +88,7 @@ class CommandPostRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['area_id'])) {
+        if (! empty($params['area_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -99,7 +98,7 @@ class CommandPostRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -109,7 +108,7 @@ class CommandPostRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['village_id'])) {
+        if (! empty($params['village_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -123,7 +122,7 @@ class CommandPostRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['title'])) {
+        if (! empty($params['title'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -153,19 +152,19 @@ class CommandPostRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             $query->where($model->getTable().'.author_id', '=', $params['author_id']);
         }
 
-        if ( ! empty($params['area_id'])) {
+        if (! empty($params['area_id'])) {
             $query->where($model->getTable().'.area_id', '=', $params['area_id']);
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             $query->where($model->getTable().'.identifier', '=', $params['identifier']);
         }
 
-        if ( ! empty($params['village_id'])) {
+        if (! empty($params['village_id'])) {
             if (is_array($params['village_id'])) {
                 $query->whereIn($model->getTable().'.village_id', $params['village_id']);
             } else {
@@ -173,7 +172,7 @@ class CommandPostRepository implements Repository
             }
         }
 
-        if ( ! empty($params['title'])) {
+        if (! empty($params['title'])) {
             $query->where($model->getTable().'.title', 'LIKE', '%'.$params['title'].'%');
         }
 
@@ -197,39 +196,39 @@ class CommandPostRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function findBy(Array $params)
+    public function findBy(array $params)
     {
         $params = array_merge([
-            'id'          => 0, 
-            'author_id'   => 0, 
-            'area_id'     => 0, 
-            'identifier'  => ''
+            'id'          => 0,
+            'author_id'   => 0,
+            'area_id'     => 0,
+            'identifier'  => '',
         ], $params);
 
         $model = $this->createModel();
 
         $query = $model->newQuery()->select($model->getTable().'.*');
 
-        if ( ! empty($params['id'])) {
+        if (! empty($params['id'])) {
             $query->where($model->getTable().'.id', '=', $params['id']);
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             $query->where($model->getTable().'.author_id', '=', $params['author_id']);
         }
 
-        if ( ! empty($params['area_id'])) {
+        if (! empty($params['area_id'])) {
             $query->where($model->getTable().'.area_id', '=', $params['area_id']);
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             $query->where($model->getTable().'.identifier', '=', $params['identifier']);
         }
 
         unset($model);
 
         $item = $query->first();
-        
+
         if (is_null($item)) {
             throw new RecordNotFoundException('Item not found!');
         }
@@ -244,7 +243,7 @@ class CommandPostRepository implements Repository
     {
         $item = $this->createModel()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -254,12 +253,12 @@ class CommandPostRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function create(Array $data)
+    public function create(array $data)
     {
         $item = $this->createModel();
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to create the item');
         }
 

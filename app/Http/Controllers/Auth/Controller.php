@@ -21,7 +21,7 @@ class Controller extends BaseController
                 Asset::$secure = true;
             }
         }
-        
+
         Asset::addScript($scripts, 'footer.scripts');
     }
 }

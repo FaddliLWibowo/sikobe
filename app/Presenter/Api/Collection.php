@@ -10,15 +10,13 @@ namespace App\Presenter\Api;
  */
 
 use App\Support\Str;
-
 use League\Fractal\TransformerAbstract;
-
 use App\Modules\Collection\Models\Collection as CollectionContract;
 
 class Collection extends TransformerAbstract
 {
     /**
-     * Turn this item object into a generic array
+     * Turn this item object into a generic array.
      *
      * @param  CollectionContract $item
      *
@@ -27,19 +25,18 @@ class Collection extends TransformerAbstract
     public function transform(CollectionContract $item)
     {
         return [
-            'id'                => (int) $item->id, 
-            'identifier'        => $item->identifier, 
-            'title'             => $item->title, 
-            'short_description' => Str::words($item->description, 20, '...'), 
-            'description'       => $item->description, 
-            'created_at'        => $item->created_at, 
+            'id'                => (int) $item->id,
+            'identifier'        => $item->identifier,
+            'title'             => $item->title,
+            'short_description' => Str::words($item->description, 20, '...'),
+            'description'       => $item->description,
+            'created_at'        => $item->created_at,
             'links'             => [
                 [
                     'rel' => 'self',
                     'uri' => '/'.$item->identifier.'s/'.$item->id,
-                ]
-            ]
+                ],
+            ],
         ];
     }
-
 }

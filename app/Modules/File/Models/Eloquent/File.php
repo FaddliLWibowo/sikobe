@@ -10,9 +10,7 @@ namespace App\Modules\File\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use Storage;
-
 use App\Modules\File\Models\File as FileInterface;
 
 class File extends Model implements FileInterface
@@ -28,19 +26,19 @@ class File extends Model implements FileInterface
      * {@inheritdoc}
      */
     protected $fillable = [
-        'object_type', 
-        'object_id', 
-        'author_id', 
-        'storage', 
-        'title', 
-        'path', 
-        'filename', 
-        'extension', 
-        'mime_type', 
-        'size', 
-        'is_backed_up', 
-        'is_backed_up_at', 
-        'is_file_missing'
+        'object_type',
+        'object_id',
+        'author_id',
+        'storage',
+        'title',
+        'path',
+        'filename',
+        'extension',
+        'mime_type',
+        'size',
+        'is_backed_up',
+        'is_backed_up_at',
+        'is_file_missing',
     ];
 
     /**
@@ -51,7 +49,7 @@ class File extends Model implements FileInterface
         if (Storage::exists($this->path.'/'.$this->filename)) {
             Storage::delete($this->path.'/'.$this->filename);
         }
-        
+
         return parent::delete();
     }
 }

@@ -10,12 +10,10 @@ namespace App\Modules\User\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\User\Models\Group as GroupInterface;
 
 class Group extends Model implements GroupInterface
 {
-
     /**
      * {@inheritdoc}
      */
@@ -25,8 +23,7 @@ class Group extends Model implements GroupInterface
      * {@inheritdoc}
      */
     protected $fillable = [
-        'name', 
-        'permissions'
+        'name',
+        'permissions',
     ];
-
 }

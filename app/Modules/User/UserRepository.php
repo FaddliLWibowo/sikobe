@@ -10,7 +10,6 @@ namespace App\Modules\User;
  */
 
 use RuntimeException;
-use App\Modules\User\RecordNotFoundException;
 
 class UserRepository implements Repository
 {
@@ -45,7 +44,7 @@ class UserRepository implements Repository
     /**
      * Current total query rows.
      *
-     * @var integer
+     * @var int
      */
     protected $total = 0;
 
@@ -70,10 +69,10 @@ class UserRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'activated'  => -1
+            'activated'  => -1,
         ], $params);
 
         $model = $this->createModel();
@@ -136,22 +135,22 @@ class UserRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function findBy(Array $params)
+    public function findBy(array $params)
     {
         $params = array_merge([
             'id'         => 0,
-            'email'      => ''
+            'email'      => '',
         ], $params);
 
         $model = $this->createModel();
 
         $query = $model->newQuery()->select($model->getTable().'.*');
 
-        if ( ! empty($params['id'])) {
+        if (! empty($params['id'])) {
             $query->where($model->getTable().'.id', '=', $params['id']);
         }
 
-        if ( ! empty($params['email'])) {
+        if (! empty($params['email'])) {
             $query->where($model->getTable().'.email', '=', $params['email']);
         }
 
@@ -169,12 +168,12 @@ class UserRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function create(Array $data)
+    public function create(array $data)
     {
         $model = $this->createModel();
         $model->fill($data);
 
-        if ( ! $model->save()) {
+        if (! $model->save()) {
             throw new RuntimeException('Failed to create the item');
         }
 
@@ -189,7 +188,7 @@ class UserRepository implements Repository
         try {
             $meta = $this->findMetaBy([
                 'user_id' => $userId,
-                'handle'  => $key
+                'handle'  => $key,
             ]);
         } catch (RecordNotFoundException $e) {
             $meta = null;
@@ -198,7 +197,7 @@ class UserRepository implements Repository
         $data = [
             'user_id' => $userId,
             'handle'  => $key,
-            'value'   => $value
+            'value'   => $value,
         ];
 
         if (is_null($meta)) {
@@ -214,17 +213,17 @@ class UserRepository implements Repository
     /**
      * Create a new meta item.
      *
-     * @param  Array $data
+     * @param  array $data
      *
      * @return \App\Modules\User\Models\UserMeta
      * @throws \RuntimeException
      */
-    private function createMeta(Array $data)
+    private function createMeta(array $data)
     {
         $model = $this->createModelMeta();
         $model->fill($data);
 
-        if ( ! $model->save()) {
+        if (! $model->save()) {
             throw new RuntimeException('Failed to create the meta');
         }
 
@@ -234,27 +233,27 @@ class UserRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function findMetaBy(Array $params)
+    public function findMetaBy(array $params)
     {
         $params = array_merge([
             'id'      => 0,
             'user_id' => 0,
-            'handle'  => ''
+            'handle'  => '',
         ], $params);
 
         $model = $this->createModelMeta();
 
         $query = $model->newQuery()->select($model->getTable().'.*');
 
-        if ( ! empty($params['id'])) {
+        if (! empty($params['id'])) {
             $query->where($model->getTable().'.id', '=', $params['id']);
         }
 
-        if ( ! empty($params['user_id'])) {
+        if (! empty($params['user_id'])) {
             $query->where($model->getTable().'.user_id', '=', $params['user_id']);
         }
 
-        if ( ! empty($params['handle'])) {
+        if (! empty($params['handle'])) {
             $query->where($model->getTable().'.handle', '=', $params['handle']);
         }
 
@@ -272,22 +271,22 @@ class UserRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function findGroupBy(Array $params)
+    public function findGroupBy(array $params)
     {
         $params = array_merge([
             'id'   => 0,
-            'name' => ''
+            'name' => '',
         ], $params);
 
         $model = $this->createModelGroup();
 
         $query = $model->newQuery()->select($model->getTable().'.*');
 
-        if ( ! empty($params['id'])) {
+        if (! empty($params['id'])) {
             $query->where($model->getTable().'.id', '=', $params['id']);
         }
 
-        if ( ! empty($params['name'])) {
+        if (! empty($params['name'])) {
             $query->where($model->getTable().'.name', '=', $params['name']);
         }
 
@@ -310,7 +309,7 @@ class UserRepository implements Repository
         $model = $this->createModelUserGroup();
         $model->fill([
             'user_id'  => $userId,
-            'group_id' => $groupId
+            'group_id' => $groupId,
         ]);
 
         $model->save();

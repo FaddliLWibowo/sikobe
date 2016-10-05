@@ -5,7 +5,7 @@ if (! function_exists('option')) {
      * Get a option.
      *
      * @param  string  $handle
-     * 
+     *
      * @return string
      * @throws \App\Modules\Option\RecordNotFoundException
      */
@@ -21,7 +21,7 @@ if (! function_exists('setOption')) {
      *
      * @param  string  $handle
      * @param  string  $value
-     * 
+     *
      * @return void
      */
     function setOption($handle, $value)
@@ -31,7 +31,8 @@ if (! function_exists('setOption')) {
 }
 
 if (! function_exists('fileUploadMaxSize')) {
-    function fileUploadMaxSize() {
+    function fileUploadMaxSize()
+    {
         static $maxSize = -1;
 
         if ($maxSize < 0) {
@@ -51,21 +52,25 @@ if (! function_exists('fileUploadMaxSize')) {
 }
 
 if (! function_exists('parseIniSize')) {
-    function parseIniSize($size) {
+    function parseIniSize($size)
+    {
         $unit = preg_replace('/[^bkmgtpezy]/i', '', $size); // Remove the non-unit characters from the size.
         $size = preg_replace('/[^0-9\.]/', '', $size); // Remove the non-numeric characters from the size.
         if ($unit) {
             // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
             return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
         }
+
         return round($size);
     }
 }
 
 if (! function_exists('humanFilesize')) {
-    function humanFilesize($bytes, $decimals = 2) {
-        $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+    function humanFilesize($bytes, $decimals = 2)
+    {
+        $size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         $factor = floor((strlen($bytes) - 1) / 3);
-        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+
+        return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)).@$size[$factor];
     }
 }

@@ -29,7 +29,7 @@ class Message
         'sender'  => 'required|max:100',
         'phone'   => 'required|max:50',
         'email'   => 'email|max:50',
-        'content' => 'required'
+        'content' => 'required',
     ];
 
     /**
@@ -48,11 +48,11 @@ class Message
      *
      * @param  array $fields
      *
-     * @return boolean|\Illuminate\Validation\Validator
+     * @return bool|\Illuminate\Validation\Validator
      */
-    public function isValid(Array $fields)
+    public function isValid(array $fields)
     {
-        $rules    = [];
+        $rules = [];
         $messages = [];
 
         foreach ($this->validationRules as $key => $value) {
@@ -60,15 +60,15 @@ class Message
                 $rules[$fields[$key]] = $value;
 
                 $messages[$fields[$key].'.required'] = 'Input ini harus di isi';
-                $messages[$fields[$key].'.max']      = 'Max isi input ini adalah :max karakter';
-                $messages[$fields[$key].'.email']    = 'Email tidak valid';
+                $messages[$fields[$key].'.max'] = 'Max isi input ini adalah :max karakter';
+                $messages[$fields[$key].'.email'] = 'Email tidak valid';
             }
         }
 
         // Do validation
         $validator = $this->getValidationFactory()->make(
             $this->request->all(),
-            $rules, 
+            $rules,
             $messages
         );
 

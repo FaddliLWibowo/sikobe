@@ -10,9 +10,7 @@ namespace App\Services\Validators;
  */
 
 use Illuminate\Http\Request;
-
 use App\Services\Territory as TerritoryService;
-
 use App\Modules\Territory\RecordNotFoundException;
 
 class Area
@@ -23,17 +21,17 @@ class Area
      * @var \Illuminate\Http\Request
      */
     protected $request;
-    
+
     /**
      * The validation rules.
      *
      * @var array
      */
     protected $validationRules = [
-        'title'       => 'required', 
-        'description' => 'required', 
-        'address'     => 'required', 
-        'village'     => 'required|is_village_exist'
+        'title'       => 'required',
+        'description' => 'required',
+        'address'     => 'required',
+        'village'     => 'required|is_village_exist',
     ];
 
     /**
@@ -42,8 +40,8 @@ class Area
      * @var array
      */
     protected $validationStatusRules = [
-        'description' => 'required', 
-        'scale'       => 'required'
+        'description' => 'required',
+        'scale'       => 'required',
     ];
 
     /**
@@ -59,8 +57,8 @@ class Area
 
     /**
      * Validate data.
-     * 
-     * @return boolean|\Illuminate\Validation\Validator
+     *
+     * @return bool|\Illuminate\Validation\Validator
      */
     public function isValid()
     {
@@ -71,6 +69,7 @@ class Area
             'is_village_exist', function ($attribute, $value) use ($service) {
                 try {
                     $service->getVillage($value);
+
                     return true;
                 } catch (RecordNotFoundException $e) {
                     return false;
@@ -80,7 +79,7 @@ class Area
 
         // Do validation
         $validator = $this->getValidationFactory()->make(
-            $this->request->all(), 
+            $this->request->all(),
             $this->validationRules
         );
 
@@ -93,14 +92,14 @@ class Area
 
     /**
      * Validate status data.
-     * 
-     * @return boolean|\Illuminate\Validation\Validator
+     *
+     * @return bool|\Illuminate\Validation\Validator
      */
     public function isValidStatus()
     {
         // Do validation
         $validator = $this->getValidationFactory()->make(
-            $this->request->all(), 
+            $this->request->all(),
             $this->validationStatusRules
         );
 

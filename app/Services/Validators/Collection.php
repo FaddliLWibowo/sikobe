@@ -28,7 +28,7 @@ class Collection
     protected $validationRules = [
         'author_id'   => 'required',
         'title'       => 'required',
-        'description' => 'required'
+        'description' => 'required',
     ];
 
     /**
@@ -45,7 +45,7 @@ class Collection
     /**
      * Validate data.
      *
-     * @return boolean|\Illuminate\Validation\Validator
+     * @return bool|\Illuminate\Validation\Validator
      */
     public function isValid()
     {

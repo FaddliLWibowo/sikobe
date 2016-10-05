@@ -10,13 +10,12 @@ namespace App\Presenter\Api\Territories;
  */
 
 use League\Fractal\TransformerAbstract;
-
 use App\Modules\Territory\Models\Regency as RegencyContract;
 
 class Regency extends TransformerAbstract
 {
     /**
-     * Turn this item object into a generic array
+     * Turn this item object into a generic array.
      *
      * @param  RegencyContract $item
      *
@@ -25,9 +24,8 @@ class Regency extends TransformerAbstract
     public function transform(RegencyContract $item)
     {
         return [
-            'id'    => $item->id, 
-            'title' => $item->name
+            'id'    => $item->id,
+            'title' => $item->name,
         ];
     }
-
 }

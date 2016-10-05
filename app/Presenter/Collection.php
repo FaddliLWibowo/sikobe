@@ -10,9 +10,6 @@ namespace App\Presenter;
  */
 
 use App\Services\User as UserService;
-
-use App\Modules\Collection\Models\Collection as CollectionContract;
-
 use App\Modules\User\RecordNotFoundException;
 
 class Collection extends Presenter
@@ -36,10 +33,10 @@ class Collection extends Presenter
 
             try {
                 $this->_user = new User($service->get($this->object['author_id']));
-            } catch (RecordNotFoundException $e) {}
+            } catch (RecordNotFoundException $e) {
+            }
         }
-        
+
         return $this->_user;
     }
-
 }

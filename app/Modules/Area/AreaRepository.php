@@ -10,7 +10,6 @@ namespace App\Modules\Area;
  */
 
 use RuntimeException;
-use App\Modules\Area\RecordNotFoundException;
 
 class AreaRepository implements Repository
 {
@@ -31,7 +30,7 @@ class AreaRepository implements Repository
     /**
      * Current total query rows.
      *
-     * @var integer
+     * @var int
      */
     protected $total = 0;
 
@@ -40,7 +39,7 @@ class AreaRepository implements Repository
      *
      * @param string $model
      * @param string $modelStatus
-     * 
+     *
      * @return void
      */
     public function __construct($model, $modelStatus)
@@ -52,16 +51,16 @@ class AreaRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'author_id'   => '', 
-            'identifier'  => '', 
-            'district_id' => '', 
-            'village_id'  => '', 
-            'title'       => '', 
-            'is_active'   => 1, 
-            'select'      => ''
+            'author_id'   => '',
+            'identifier'  => '',
+            'district_id' => '',
+            'village_id'  => '',
+            'title'       => '',
+            'is_active'   => 1,
+            'select'      => '',
         ], $params);
 
         $model = $this->createModel();
@@ -76,7 +75,7 @@ class AreaRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['author_id'])
+        if (! empty($params['author_id'])
          || ! empty($params['identifier'])
          || ! empty($params['district_id'])
          || ! empty($params['village_id'])
@@ -89,7 +88,7 @@ class AreaRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -99,7 +98,7 @@ class AreaRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -109,7 +108,7 @@ class AreaRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['district_id'])) {
+        if (! empty($params['district_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -119,7 +118,7 @@ class AreaRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['village_id'])) {
+        if (! empty($params['village_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -133,7 +132,7 @@ class AreaRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['title'])) {
+        if (! empty($params['title'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -163,19 +162,19 @@ class AreaRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             $query->where($model->getTable().'.author_id', '=', $params['author_id']);
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             $query->where($model->getTable().'.identifier', '=', $params['identifier']);
         }
 
-        if ( ! empty($params['district_id'])) {
+        if (! empty($params['district_id'])) {
             $query->where($model->getTable().'.district_id', '=', $params['district_id']);
         }
 
-        if ( ! empty($params['village_id'])) {
+        if (! empty($params['village_id'])) {
             if (is_array($params['village_id'])) {
                 $query->whereIn($model->getTable().'.village_id', $params['village_id']);
             } else {
@@ -183,7 +182,7 @@ class AreaRepository implements Repository
             }
         }
 
-        if ( ! empty($params['title'])) {
+        if (! empty($params['title'])) {
             $query->where($model->getTable().'.title', 'LIKE', '%'.$params['title'].'%');
         }
 
@@ -195,7 +194,7 @@ class AreaRepository implements Repository
 
         $query = $model->newQuery();
 
-        if ( ! empty($params['select'])) {
+        if (! empty($params['select'])) {
             $query->select($params['select']);
         } else {
             $query->select($model->getTable().'.*');
@@ -214,34 +213,34 @@ class AreaRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function findBy(Array $params)
+    public function findBy(array $params)
     {
         $params = array_merge([
-            'id'          => 0, 
-            'author_id'   => 0, 
-            'identifier'  => ''
+            'id'          => 0,
+            'author_id'   => 0,
+            'identifier'  => '',
         ], $params);
 
         $model = $this->createModel();
 
         $query = $model->newQuery()->select($model->getTable().'.*');
 
-        if ( ! empty($params['id'])) {
+        if (! empty($params['id'])) {
             $query->where($model->getTable().'.id', '=', $params['id']);
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             $query->where($model->getTable().'.author_id', '=', $params['author_id']);
         }
 
-        if ( ! empty($params['identifier'])) {
+        if (! empty($params['identifier'])) {
             $query->where($model->getTable().'.identifier', '=', $params['identifier']);
         }
 
         unset($model);
 
         $item = $query->first();
-        
+
         if (is_null($item)) {
             throw new RecordNotFoundException('Item not found!');
         }
@@ -256,7 +255,7 @@ class AreaRepository implements Repository
     {
         $item = $this->createModel()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -266,12 +265,12 @@ class AreaRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function create(Array $data)
+    public function create(array $data)
     {
         $item = $this->createModel();
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to create the item');
         }
 
@@ -281,12 +280,12 @@ class AreaRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function searchStatus(Array $params = [], $page = 1, $limit = 10)
+    public function searchStatus(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
             'area_id'   => '',
-            'author_id' => '', 
-            'is_active' => 1
+            'author_id' => '',
+            'is_active' => 1,
         ], $params);
 
         $model = $this->createModelStatus();
@@ -301,7 +300,7 @@ class AreaRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['area_id'])
+        if (! empty($params['area_id'])
          || ! empty($params['author_id'])
          || $params['is_active'] > -1) {
             $useWhere = true;
@@ -311,7 +310,7 @@ class AreaRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['area_id'])) {
+        if (! empty($params['area_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -321,7 +320,7 @@ class AreaRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -346,16 +345,16 @@ class AreaRepository implements Repository
         if ($limit > 0) {
             $fromSql .= ' limit '.$limit.' offset '.($page - 1) * $limit;
         }
-        
+
         $fromSql .= ') o';
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['area_id'])) {
+        if (! empty($params['area_id'])) {
             $query->where($model->getTable().'.area_id', '=', $params['area_id']);
         }
 
-        if ( ! empty($params['author_id'])) {
+        if (! empty($params['author_id'])) {
             $query->where($model->getTable().'.author_id', '=', $params['author_id']);
         }
 
@@ -383,7 +382,7 @@ class AreaRepository implements Repository
     {
         $item = $this->createModelStatus()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -393,12 +392,12 @@ class AreaRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function createStatus(Array $data)
+    public function createStatus(array $data)
     {
         $item = $this->createModelStatus();
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to create the item');
         }
 
