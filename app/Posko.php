@@ -10,15 +10,13 @@ namespace App;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\CommandPost\Models\CommandPost;
 
 class Posko extends Model implements CommandPost
 {
+    protected $table = 'posko';
 
-  protected $table = 'posko';
-
-  protected $fillable = [
+    protected $fillable = [
       'title',
       'address',
       'village_id',
@@ -27,7 +25,7 @@ class Posko extends Model implements CommandPost
       'area_id',
       'latitude',
       'longitude',
-      'author_id'
+      'author_id',
   ];
 
     /**
@@ -52,6 +50,7 @@ class Posko extends Model implements CommandPost
     public function files()
     {
         $files = $this->hasMany('\App\Modules\File\Models\Eloquent\File', 'object_id');
+
         return $files->where('object_type', 'posko')->where('is_active', 1);
     }
 }

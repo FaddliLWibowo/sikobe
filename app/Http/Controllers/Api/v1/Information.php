@@ -10,11 +10,8 @@ namespace App\Http\Controllers\Api\v1;
  */
 
 use Illuminate\Http\Request;
-
 use Dingo\Api\Routing\Helpers;
-
 use App\Services\Collection as CollectionService;
-
 use App\Presenter\Api\Collection as CollectionPresenter;
 
 class Information extends Controller
@@ -23,7 +20,7 @@ class Information extends Controller
 
     /**
      * Return the all information.
-     * 
+     *
      * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\Response
@@ -31,15 +28,15 @@ class Information extends Controller
     public function getAll(Request $request)
     {
         $identifier = 'information';
-        $limit      = (int) $request->get('limit', 10);
-        $page       = (int) $request->get('page', 1);
+        $limit = (int) $request->get('limit', 10);
+        $page = (int) $request->get('page', 1);
 
         $result = $this->getService()->search([
-            'identifier' => $identifier
+            'identifier' => $identifier,
         ], $page, $limit);
-        
+
         return $this->response->paginator(
-            $result, 
+            $result,
             new CollectionPresenter
         );
     }

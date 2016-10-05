@@ -10,20 +10,15 @@ namespace App\Presenter\Api\Area;
  */
 
 use App\Support\Str;
-
 use League\Fractal\TransformerAbstract;
-
 use App\Services\Territory as TerritoryService;
 use App\Services\File as FileService;
-
 use App\Modules\Area\Models\Area as AreaContract;
-
 use App\Presenter\Api\Territories\Province;
 use App\Presenter\Api\Territories\Regency;
 use App\Presenter\Api\Territories\District;
 use App\Presenter\Api\Territories\Village;
 use App\Presenter\Api\File;
-
 use App\Modules\Territory\RecordNotFoundException as TerritoryRecordNotFoundException;
 
 class Area extends TransformerAbstract
@@ -46,16 +41,16 @@ class Area extends TransformerAbstract
      * {@inheritdoc}
      */
     protected $availableIncludes = [
-        'province', 
-        'regency', 
-        'district', 
-        'village', 
-        'photos', 
-        'latest_status'
+        'province',
+        'regency',
+        'district',
+        'village',
+        'photos',
+        'latest_status',
     ];
 
     /**
-     * Turn this item object into a generic array
+     * Turn this item object into a generic array.
      *
      * @param  AreaContract $item
      *
@@ -64,27 +59,27 @@ class Area extends TransformerAbstract
     public function transform(AreaContract $item)
     {
         return [
-            'id'                => (int) $item->id, 
-            'identifier'        => $item->identifier, 
-            'title'             => $item->title, 
-            'short_description' => Str::words($item->description, 20, '...'), 
-            'description'       => $item->description, 
-            'address'           => $item->address, 
-            'latitude'          => (float) $item->latitude, 
-            'longitude'         => (float) $item->longitude, 
-            'status'            => $item->status, 
-            'created_at'        => $item->created_at, 
+            'id'                => (int) $item->id,
+            'identifier'        => $item->identifier,
+            'title'             => $item->title,
+            'short_description' => Str::words($item->description, 20, '...'),
+            'description'       => $item->description,
+            'address'           => $item->address,
+            'latitude'          => (float) $item->latitude,
+            'longitude'         => (float) $item->longitude,
+            'status'            => $item->status,
+            'created_at'        => $item->created_at,
             'links'             => [
                 [
                     'rel' => 'self',
                     'uri' => '/areas/'.$item->identifier,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 
     /**
-     * Include latest status
+     * Include latest status.
      *
      * @param  AreaContract $area
      *
@@ -95,16 +90,14 @@ class Area extends TransformerAbstract
         $status = $area->statuses()
                         ->where('is_active', '=', 1)
                         ->orderBy('created_at', 'DESC')->first();
-        
+
         if (is_object($status)) {
             return $this->item($status, new Status);
         }
-
-        return null;
     }
 
     /**
-     * Include photos
+     * Include photos.
      *
      * @param  AreaContract $area
      *
@@ -113,15 +106,15 @@ class Area extends TransformerAbstract
     public function includePhotos(AreaContract $area)
     {
         list($files) = $this->getFileService()->search([
-            'object_type' => 'area', 
-            'object_id'   => $area->id
+            'object_type' => 'area',
+            'object_id'   => $area->id,
         ], 1, 0);
 
         return $this->collection($files, new File);
     }
 
     /**
-     * Include Province
+     * Include Province.
      *
      * @param  AreaContract $area
      *
@@ -131,16 +124,15 @@ class Area extends TransformerAbstract
     {
         try {
             return $this->item(
-                $this->getTerritoryService()->getProvince($area->province_id), 
+                $this->getTerritoryService()->getProvince($area->province_id),
                 new Province
             );
-        } catch (TerritoryRecordNotFoundException $e) {}
-
-        return null;
+        } catch (TerritoryRecordNotFoundException $e) {
+        }
     }
 
     /**
-     * Include Regency
+     * Include Regency.
      *
      * @param  AreaContract $area
      *
@@ -150,16 +142,15 @@ class Area extends TransformerAbstract
     {
         try {
             return $this->item(
-                $this->getTerritoryService()->getRegency($area->regency_id), 
+                $this->getTerritoryService()->getRegency($area->regency_id),
                 new Regency
             );
-        } catch (TerritoryRecordNotFoundException $e) {}
-
-        return null;
+        } catch (TerritoryRecordNotFoundException $e) {
+        }
     }
 
     /**
-     * Include District
+     * Include District.
      *
      * @param  AreaContract $area
      *
@@ -169,16 +160,15 @@ class Area extends TransformerAbstract
     {
         try {
             return $this->item(
-                $this->getTerritoryService()->getDistrict($area->district_id), 
+                $this->getTerritoryService()->getDistrict($area->district_id),
                 new District
             );
-        } catch (TerritoryRecordNotFoundException $e) {}
-
-        return null;
+        } catch (TerritoryRecordNotFoundException $e) {
+        }
     }
 
     /**
-     * Include Village
+     * Include Village.
      *
      * @param  AreaContract $area
      *
@@ -188,12 +178,11 @@ class Area extends TransformerAbstract
     {
         try {
             return $this->item(
-                $this->getTerritoryService()->getVillage($area->village_id), 
+                $this->getTerritoryService()->getVillage($area->village_id),
                 new Village
             );
-        } catch (TerritoryRecordNotFoundException $e) {}
-
-        return null;
+        } catch (TerritoryRecordNotFoundException $e) {
+        }
     }
 
     /**
@@ -223,5 +212,4 @@ class Area extends TransformerAbstract
 
         return $this->fileService;
     }
-
 }

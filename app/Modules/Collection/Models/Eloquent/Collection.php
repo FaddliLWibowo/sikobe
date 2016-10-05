@@ -10,10 +10,8 @@ namespace App\Modules\Collection\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Presenter\Collection as CollectionPresenter;
 use App\Contracts\Presentable;
-
 use App\Modules\Collection\Models\Collection as CollectionInterface;
 
 class Collection extends Model implements CollectionInterface, Presentable
@@ -32,7 +30,7 @@ class Collection extends Model implements CollectionInterface, Presentable
         'author_id',
         'identifier',
         'title',
-        'description'
+        'description',
     ];
 
     /**

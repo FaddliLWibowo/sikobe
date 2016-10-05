@@ -10,7 +10,6 @@ namespace App\Modules\Territory\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\Territory\Models\Province as ProvinceInterface;
 
 class Province extends Model implements ProvinceInterface
@@ -26,6 +25,6 @@ class Province extends Model implements ProvinceInterface
      * {@inheritdoc}
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 }

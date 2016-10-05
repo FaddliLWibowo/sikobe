@@ -11,11 +11,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
-
 use App\Support\Asset;
 use App\Services\Territory as TerritoryService;
 use App\Services\Area as AreaService;
-
 use RuntimeException;
 use App\Modules\Area\RecordNotFoundException;
 
@@ -24,14 +22,14 @@ class Area extends Controller
     /**
      * Current province ID.
      *
-     * @var integer
+     * @var int
      */
     protected $provinceId = 32;
 
     /**
      * Current regency ID.
      *
-     * @var integer
+     * @var int
      */
     protected $regencyId = 3205;
 
@@ -44,18 +42,18 @@ class Area extends Controller
      */
     public function index(Request $request)
     {
-        $limit    = 10;
-        $page     = (int) $request->get('page', 1);
+        $limit = 10;
+        $page = (int) $request->get('page', 1);
         $district = (int) $request->get('district');
-        $village  = (int) $request->get('village');
-        $title    = trim($request->get('title'));
+        $village = (int) $request->get('village');
+        $title = trim($request->get('title'));
 
         $areaService = $this->getAreaService();
 
         $list = $areaService->search([
             'district_id' => $district,
             'village_id'  => $village,
-            'title'       => $title
+            'title'       => $title,
         ], $page, $limit);
 
         list($districts, $villages) = $this->getTerritories();
@@ -64,11 +62,11 @@ class Area extends Controller
             'filter' => [
                 'district' => $district,
                 'village'  => $village,
-                'title'    => $title
+                'title'    => $title,
             ],
             'districts' => $districts,
             'villages'  => $villages,
-            'list'      => $list
+            'list'      => $list,
         ]);
     }
 
@@ -76,7 +74,7 @@ class Area extends Controller
      * Show the form info.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Integer                   $id
+     * @param  int                   $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -89,7 +87,7 @@ class Area extends Controller
      * Show the form status.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Integer                   $id
+     * @param  int                   $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -102,7 +100,7 @@ class Area extends Controller
      * Show the form.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Integer                   $id
+     * @param  int                   $id
      * @param  string                    $tab
      * @param  string                    $statusId
      *
@@ -144,10 +142,10 @@ class Area extends Controller
 
         // Get existing statuses
         $limit = 10;
-        $page  = (int) $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         $statuses = $areaService->searchStatus([
-            'area_id' => ( ! empty($data->id)) ? $data->id : -1
+            'area_id' => (! empty($data->id)) ? $data->id : -1,
         ], $page, $limit);
 
         // Get all available territories
@@ -163,8 +161,8 @@ class Area extends Controller
             'districts' => $districts,
             'villages'  => $villages,
             'data'      => $data->getPresenter(),
-            'status'    => ( ! is_null($status)) ? $status->getPresenter() : null,
-            'statuses'  => $statuses
+            'status'    => (! is_null($status)) ? $status->getPresenter() : null,
+            'statuses'  => $statuses,
         ]);
     }
 
@@ -172,7 +170,7 @@ class Area extends Controller
      * Save a item.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Integer                  $id
+     * @param  int                  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -186,7 +184,7 @@ class Area extends Controller
                 'regency_id'  => $this->regencyId,
             ]);
 
-            if ($response instanceOf Validator) {
+            if ($response instanceof Validator) {
                 $request->session()->flash('error', 'Tolong perbaiki input dengan tanda merah!');
 
                 $this->throwValidationException(
@@ -208,8 +206,8 @@ class Area extends Controller
      * Save a status item.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Integer                  $areaId
-     * @param  Integer                  $id
+     * @param  int                  $areaId
+     * @param  int                  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -220,7 +218,7 @@ class Area extends Controller
         try {
             $response = $service->saveStatus($areaId, $id);
 
-            if ($response instanceOf Validator) {
+            if ($response instanceof Validator) {
                 $request->session()->flash('error', 'Tolong perbaiki input dengan tanda merah!');
 
                 $this->throwValidationException(
@@ -242,7 +240,7 @@ class Area extends Controller
      * Delete a item.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  integer                  $id
+     * @param  int                  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -260,7 +258,7 @@ class Area extends Controller
             abort(404);
         }
 
-        if ( ! $isDeleted) {
+        if (! $isDeleted) {
             $request->session()->flash('error', 'Terjadi kesalahan ketika menghapus!');
 
             return back();
@@ -275,8 +273,8 @@ class Area extends Controller
      * Delete a status item.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  integer                  $areaId
-     * @param  integer                  $id
+     * @param  int                  $areaId
+     * @param  int                  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -294,7 +292,7 @@ class Area extends Controller
             abort(404);
         }
 
-        if ( ! $isDeleted) {
+        if (! $isDeleted) {
             $request->session()->flash('error', 'Terjadi kesalahan ketika menghapus!');
 
             return back();
@@ -317,13 +315,13 @@ class Area extends Controller
         list($districts) = $territoryService->searchDistricts([
             'province_id' => $this->provinceId,
             'regency_id'  => $this->regencyId,
-            'order_by'    => 'name'
+            'order_by'    => 'name',
         ], 1, 0);
 
         list($villages) = $territoryService->searchVillages([
             'province_id' => $this->provinceId,
             'regency_id'  => $this->regencyId,
-            'order_by'    => 'name'
+            'order_by'    => 'name',
         ], 1, 0);
 
         return [$districts, $villages];

@@ -10,7 +10,6 @@ namespace App\Modules\User\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\User\Repository;
 use App\Modules\User\UserRepository;
 
@@ -34,11 +33,11 @@ class UserServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Repository::class, function() {
+        $this->app->singleton(Repository::class, function () {
             return new UserRepository(
-                \App\User::class, 
-                \App\Modules\User\Models\Eloquent\UserMeta::class, 
-                \App\Modules\User\Models\Eloquent\Group::class, 
+                \App\User::class,
+                \App\Modules\User\Models\Eloquent\UserMeta::class,
+                \App\Modules\User\Models\Eloquent\Group::class,
                 \App\Modules\User\Models\Eloquent\UserGroup::class
             );
         });

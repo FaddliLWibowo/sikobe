@@ -10,11 +10,11 @@ namespace App\Presenter;
  */
 
 use App\Contracts\Presentable;
-use ArrayAccess, IteratorAggregate;
+use ArrayAccess;
+use IteratorAggregate;
 
 class Decorator
 {
-
     /*
      * If this variable implements App\Contracts\Presentable
      * then turn it into a presenter.
@@ -36,5 +36,4 @@ class Decorator
 
         return $value;
     }
-  
 }

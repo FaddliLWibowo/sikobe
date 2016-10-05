@@ -11,8 +11,6 @@ namespace App\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-use App\Http\Controllers\Admin\User as UserController;
-use App\Modules\User\Models\User;
 
 class UserPolicy
 {

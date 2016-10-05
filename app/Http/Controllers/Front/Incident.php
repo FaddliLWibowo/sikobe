@@ -10,15 +10,13 @@ namespace App\Http\Controllers\Front;
  */
 
 use Illuminate\Http\Request;
-
 use App\Support\Asset;
-
 use App\Services\Area as AreaService;
 
 class Incident extends Controller
 {
     /**
-     * Show the informations page
+     * Show the informations page.
      *
      * @param  \Illuminate\Http\Request  $request.
      *
@@ -26,19 +24,19 @@ class Incident extends Controller
      */
     public function index(Request $request)
     {
-        $limit  = 5;
-        $page   = (int) $request->get('page', 1);
+        $limit = 5;
+        $page = (int) $request->get('page', 1);
         $search = $request->get('search', '');
 
         $result = $this->getAreaService()->searchStatus([
-            'search' => $search
+            'search' => $search,
         ], $page, $limit);
 
         Asset::add(elixir('assets/css/informations.css'), 'header.top.specific.css');
 
         return view('incidents', [
-            'search' => $search, 
-            'list'   => $result
+            'search' => $search,
+            'list'   => $result,
         ]);
     }
 

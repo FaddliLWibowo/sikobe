@@ -10,7 +10,6 @@ namespace App\Modules\File;
  */
 
 use RuntimeException;
-use App\Modules\File\RecordNotFoundException;
 
 class FileRepository implements Repository
 {
@@ -24,7 +23,7 @@ class FileRepository implements Repository
     /**
      * Current total query rows.
      *
-     * @var integer
+     * @var int
      */
     protected $total = 0;
 
@@ -32,7 +31,7 @@ class FileRepository implements Repository
      * Create a new instance.
      *
      * @param string $model
-     * 
+     *
      * @return void
      */
     public function __construct($model)
@@ -43,12 +42,12 @@ class FileRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $params = array_merge([
-            'object_type' => '', 
-            'object_id'   => 0, 
-            'is_active'   => 1
+            'object_type' => '',
+            'object_id'   => 0,
+            'is_active'   => 1,
         ], $params);
 
         $model = $this->createModel();
@@ -63,7 +62,7 @@ class FileRepository implements Repository
         $useWhere = false;
         $isUseWhere = false;
 
-        if ( ! empty($params['object_type'])
+        if (! empty($params['object_type'])
          || ! empty($params['object_id'])
          || $params['is_active'] > -1) {
             $useWhere = true;
@@ -73,7 +72,7 @@ class FileRepository implements Repository
             $fromSql .= ' WHERE';
         }
 
-        if ( ! empty($params['object_type'])) {
+        if (! empty($params['object_type'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -83,7 +82,7 @@ class FileRepository implements Repository
             $isUseWhere = true;
         }
 
-        if ( ! empty($params['object_id'])) {
+        if (! empty($params['object_id'])) {
             if ($isUseWhere) {
                 $fromSql .= ' AND';
             }
@@ -113,11 +112,11 @@ class FileRepository implements Repository
 
         $query = $model->select($model->getTable().'.id');
 
-        if ( ! empty($params['object_type'])) {
+        if (! empty($params['object_type'])) {
             $query->where($model->getTable().'.object_type', '=', $params['object_type']);
         }
 
-        if ( ! empty($params['object_id'])) {
+        if (! empty($params['object_id'])) {
             $query->where($model->getTable().'.object_id', '=', $params['object_id']);
         }
 
@@ -141,33 +140,33 @@ class FileRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function findBy(Array $params)
+    public function findBy(array $params)
     {
         $params = array_merge([
-            'object_type' => 'account', 
-            'object_id'   => 0, 
-            'id'          => 0
+            'object_type' => 'account',
+            'object_id'   => 0,
+            'id'          => 0,
         ], $params);
 
         $model = $this->createModel();
 
         $query = $model->newQuery()->select($model->getTable().'.*');
 
-        if ( ! empty($params['object_type'])) {
+        if (! empty($params['object_type'])) {
             $query->where($model->getTable().'.object_type', '=', $params['object_type']);
         }
-        if ( ! empty($params['object_id'])) {
+        if (! empty($params['object_id'])) {
             $query->where($model->getTable().'.object_id', '=', $params['object_id']);
         }
 
-        if ( ! empty($params['id'])) {
+        if (! empty($params['id'])) {
             $query->where($model->getTable().'.id', '=', $params['id']);
         }
 
         unset($model);
 
         $item = $query->first();
-        
+
         if (is_null($item)) {
             throw new RecordNotFoundException('Item not found!');
         }
@@ -182,7 +181,7 @@ class FileRepository implements Repository
     {
         $item = $this->createModel()->find($id);
 
-        if ( ! is_object($item)) {
+        if (! is_object($item)) {
             throw new RecordNotFoundException('No item found');
         }
 
@@ -192,12 +191,12 @@ class FileRepository implements Repository
     /**
      * {@inheritdoc}
      */
-    public function create(Array $data)
+    public function create(array $data)
     {
         $item = $this->createModel();
         $item->fill($data);
 
-        if ( ! $item->save()) {
+        if (! $item->save()) {
             throw new RuntimeException('Failed to create the item');
         }
 

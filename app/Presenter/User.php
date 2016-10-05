@@ -32,7 +32,7 @@ class User extends Presenter
 
         $metas = $user->metas()->getResults();
 
-        if ( ! $metas->isEmpty()) {
+        if (! $metas->isEmpty()) {
             foreach ($metas as $item) {
                 $this->object[$item->handle] = $item->value;
             }
@@ -59,12 +59,11 @@ class User extends Presenter
     public function presentGroups()
     {
         if (is_null($this->_groups)) {
-            $this->_groups = $this->object->groups->map(function($item) {
+            $this->_groups = $this->object->groups->map(function ($item) {
                 return new Group($item);
             });
         }
-        
+
         return $this->_groups;
     }
-
 }

@@ -10,7 +10,6 @@ namespace App\Modules\Message\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\Message\Models\Message as MessageInterface;
 
 class Message extends Model implements MessageInterface
@@ -26,10 +25,10 @@ class Message extends Model implements MessageInterface
      * {@inheritdoc}
      */
     protected $fillable = [
-        'title', 
-        'content', 
-        'sender', 
-        'phone', 
-        'email'
+        'title',
+        'content',
+        'sender',
+        'phone',
+        'email',
     ];
 }

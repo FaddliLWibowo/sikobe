@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
-
 use App\Http\Controllers\Controller as BaseController;
 use App\Support\Asset;
 
@@ -18,7 +17,7 @@ class Controller extends BaseController
 
     /**
      * Create a new controller instance.
-     * 
+     *
      * @return void
      */
     public function __construct()

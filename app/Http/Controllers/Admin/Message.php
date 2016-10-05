@@ -10,7 +10,6 @@ namespace App\Http\Controllers\Admin;
  */
 
 use Illuminate\Http\Request;
-
 use App\Services\Message as MessageService;
 
 class Message extends Controller
@@ -24,21 +23,21 @@ class Message extends Controller
      */
     public function index(Request $request)
     {
-        $limit  = 10;
-        $page   = (int) $request->get('page', 1);
+        $limit = 10;
+        $page = (int) $request->get('page', 1);
         $search = trim($request->get('search'));
 
         $service = $this->getMessageService();
 
         $list = $service->search([
-            'search' => $search
+            'search' => $search,
         ], $page, $limit);
 
         return view('admin.message.list', [
             'filter' => [
-                'search' => $search
+                'search' => $search,
             ],
-            'list'   => $list
+            'list'   => $list,
         ]);
     }
 

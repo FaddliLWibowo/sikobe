@@ -15,17 +15,17 @@ interface Repository
      * Return list items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
+     * @param  int $page
+     * @param  int $limit
      *
      * @return \Message
      */
-    public function search(Array $params = [], $page = 1, $limit = 10);
+    public function search(array $params = [], $page = 1, $limit = 10);
 
     /**
      * Find the item by it's ID.
      *
-     * @param  integer $id
+     * @param  int $id
      *
      * @return \App\Modules\Message\Models\Message
      *
@@ -36,17 +36,17 @@ interface Repository
     /**
      * Create a new item.
      *
-     * @param  Array $data
+     * @param  array $data
      *
      * @return \App\Modules\Message\Models\Message|null
      * @throws \RuntimeException
      */
-    public function create(Array $data);
+    public function create(array $data);
 
     /**
      * Return latest query total items.
      *
-     * @return integer
+     * @return int
      */
     public function getTotal();
 }

@@ -10,7 +10,6 @@ namespace App\Modules\Territory\Models\Eloquent;
  */
 
 use Illuminate\Database\Eloquent\Model;
-
 use App\Modules\Territory\Models\District as DistrictInterface;
 
 class District extends Model implements DistrictInterface
@@ -27,7 +26,7 @@ class District extends Model implements DistrictInterface
      */
     protected $fillable = [
         'regency_id',
-        'name'
+        'name',
     ];
 
     public function regency()

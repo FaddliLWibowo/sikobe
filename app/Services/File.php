@@ -17,13 +17,13 @@ class File extends Service
      * Search items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return array
      * @throws \RuntimeException
      */
-    public function search(Array $params = [], $page = 1, $limit = 10)
+    public function search(array $params = [], $page = 1, $limit = 10)
     {
         $repository = $this->getFileRepository();
         $collection = $repository->search($params, $page, $limit);
@@ -35,11 +35,11 @@ class File extends Service
      * Create a item.
      *
      * @param  array  $data
-     * 
+     *
      * @return \App\Modules\File\Models\File
      * @throws \RuntimeException
      */
-    public function create(Array $data)
+    public function create(array $data)
     {
         return $this->getFileRepository()->create($data);
     }

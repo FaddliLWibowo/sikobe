@@ -15,31 +15,31 @@ interface Repository
      * Return list items.
      *
      * @param  array   $params
-     * @param  integer $page
-     * @param  integer $limit
-     * 
+     * @param  int $page
+     * @param  int $limit
+     *
      * @return \Collection
      */
-    public function search(Array $params = [], $page = 1, $limit = 10);
+    public function search(array $params = [], $page = 1, $limit = 10);
 
     /**
      * Find a item by params.
      *
      * @param  array $params
-     * 
+     *
      * @return \App\Modules\CommandPost\Models\CommandPost
-     * 
+     *
      * @throws \App\Modules\CommandPost\RecordNotFoundException
      */
-    public function findBy(Array $params);
+    public function findBy(array $params);
 
     /**
      * Find the item by it's ID.
      *
-     * @param  integer $id
-     * 
+     * @param  int $id
+     *
      * @return \App\Modules\CommandPost\Models\CommandPost
-     * 
+     *
      * @throws \App\Modules\CommandPost\RecordNotFoundException
      */
     public function find($id);
@@ -47,17 +47,17 @@ interface Repository
     /**
      * Create a new item.
      *
-     * @param  Array $data
-     * 
+     * @param  array $data
+     *
      * @return \App\Modules\CommandPost\Models\CommandPost|null
      * @throws \RuntimeException
      */
-    public function create(Array $data);
+    public function create(array $data);
 
     /**
      * Return latest query total items.
      *
-     * @return integer
+     * @return int
      */
     public function getTotal();
 

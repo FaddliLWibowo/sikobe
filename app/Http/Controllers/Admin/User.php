@@ -10,16 +10,13 @@ namespace App\Http\Controllers\Admin;
  */
 
 use Gate;
-
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
 use App\Support\Asset;
 use App\Presenter\User as UserPresenter;
 use App\Services\User as UserService;
-
 use RuntimeException;
 use App\Modules\User\RecordNotFoundException;
 
@@ -53,7 +50,7 @@ class User extends Controller
         try {
             $response = $service->updateProfile($this->user->id);
 
-            if ($response instanceOf Validator) {
+            if ($response instanceof Validator) {
                 $request->session()->flash('error', 'Tolong perbaiki input dengan tanda merah!');
 
                 $this->throwValidationException(
@@ -86,14 +83,14 @@ class User extends Controller
         }
 
         $limit = 10;
-        $page  = (int) $request->get('page', 1);
+        $page = (int) $request->get('page', 1);
 
         $service = $this->getService();
 
         list($collection, $total) = $service->search([], $page, $limit);
 
         // Optional wrapping to a presenter, as User object is required by default
-        $collection = $collection->map(function($item) {
+        $collection = $collection->map(function ($item) {
             return new UserPresenter($item);
         });
 
@@ -106,7 +103,7 @@ class User extends Controller
         );
 
         return view('admin.users', [
-            'list' => $list
+            'list' => $list,
         ]);
     }
 
@@ -114,7 +111,7 @@ class User extends Controller
      * Delete a item.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  integer                  $id
+     * @param  int                  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -137,7 +134,7 @@ class User extends Controller
             abort(404);
         }
 
-        if ( ! $isDeleted) {
+        if (! $isDeleted) {
             $request->session()->flash('error', 'Terjadi kesalahan ketika menghapus!');
         } else {
             $request->session()->flash('success', 'Berhasil dihapus!');
@@ -165,7 +162,7 @@ class User extends Controller
         try {
             $response = $service->create();
 
-            if ($response instanceOf Validator) {
+            if ($response instanceof Validator) {
                 $request->session()->flash('error', 'Tolong perbaiki input dengan tanda merah!');
 
                 $this->throwValidationException(
@@ -185,7 +182,7 @@ class User extends Controller
      * Save a item.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Integer                  $id
+     * @param  int                  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -201,7 +198,7 @@ class User extends Controller
         try {
             $response = $service->save($id);
 
-            if ($response instanceOf Validator) {
+            if ($response instanceof Validator) {
                 $request->session()->flash('error', 'Tolong perbaiki input dengan tanda merah!');
 
                 $this->throwValidationException(

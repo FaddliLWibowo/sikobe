@@ -10,13 +10,12 @@ namespace App\Presenter\Api;
  */
 
 use League\Fractal\TransformerAbstract;
-
 use App\Modules\File\Models\File as FileContract;
 
 class File extends TransformerAbstract
 {
     /**
-     * Turn this item object into a generic array
+     * Turn this item object into a generic array.
      *
      * @param  FileContract $item
      *
@@ -25,10 +24,9 @@ class File extends TransformerAbstract
     public function transform(FileContract $item)
     {
         return [
-            'title'      => $item->title, 
-            'url'        => env('APP_URL').'/storage/'.$item->filename, 
-            'created_at' => $item->created_at
+            'title'      => $item->title,
+            'url'        => env('APP_URL').'/storage/'.$item->filename,
+            'created_at' => $item->created_at,
         ];
     }
-
 }

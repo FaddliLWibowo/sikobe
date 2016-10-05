@@ -10,7 +10,6 @@ namespace App\Modules\Territory\Providers\Illuminate;
  */
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-
 use App\Modules\Territory\Repository;
 use App\Modules\Territory\TerritoryRepository;
 
@@ -34,11 +33,11 @@ class TerritoryServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Repository::class, function() {
+        $this->app->singleton(Repository::class, function () {
             return new TerritoryRepository(
-                \App\Modules\Territory\Models\Eloquent\Province::class, 
-                \App\Modules\Territory\Models\Eloquent\Regency::class, 
-                \App\Modules\Territory\Models\Eloquent\District::class, 
+                \App\Modules\Territory\Models\Eloquent\Province::class,
+                \App\Modules\Territory\Models\Eloquent\Regency::class,
+                \App\Modules\Territory\Models\Eloquent\District::class,
                 \App\Modules\Territory\Models\Eloquent\Village::class
             );
         });

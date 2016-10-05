@@ -11,17 +11,14 @@ namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
-
 use App\Support\Asset;
-
 use App\Services\Message as MessageService;
-
 use RuntimeException;
 
 class Contact extends Controller
 {
     /**
-     * Show the contact page
+     * Show the contact page.
      *
      * @param  \Illuminate\Http\Request  $request.
      *
@@ -29,7 +26,7 @@ class Contact extends Controller
      */
     public function index(Request $request)
     {
-        if ( ! $request->session()->exists('contact')) {
+        if (! $request->session()->exists('contact')) {
             $fields = ['sender', 'phone', 'email', 'content'];
 
             $hashedFields = [];
@@ -51,11 +48,11 @@ class Contact extends Controller
 
         $scripts = 'var latContact = '.env('POSKO_PUSAT_LATITUDE', 0).';';
         $scripts .= 'var lngContact = '.env('POSKO_PUSAT_LONGITUDE', 0).';';
-        
+
         Asset::addScript($scripts, 'footer.scripts');
 
         return view('contact', [
-            'fields' => $hashedFields
+            'fields' => $hashedFields,
         ]);
     }
 
@@ -75,7 +72,7 @@ class Contact extends Controller
         try {
             $response = $service->create($hashedFields);
 
-            if ($response instanceOf Validator) {
+            if ($response instanceof Validator) {
                 $request->session()->flash('error', 'Tolong perbaiki input dengan tanda merah!');
 
                 $this->throwValidationException(
